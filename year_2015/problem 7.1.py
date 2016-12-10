@@ -16,14 +16,16 @@
 
 
 circuit = [
-'123 -> x', '456 -> y', 'x AND y -> d', 'x OR y -> e', 'x LSHIFT 2 -> f', 'y RSHIFT 2 -> g', 'NOT x -> h', 'NOT y -> i',
+    '123 -> x', '456 -> y', 'x AND y -> d', 'x OR y -> e', 'x LSHIFT 2 -> f', 'y RSHIFT 2 -> g', 'NOT x -> h',
+    'NOT y -> i',
 ]
 
 from collections import namedtuple
 
-Operation = namedtuple('Operation', ['operator', 'x', 'y', 'z']) # operator; operand 1; operand 2; operand 3
+Operation = namedtuple('Operation', ['operator', 'x', 'y', 'z'])  # operator; operand 1; operand 2; operand 3
 
 values = {}
+
 
 def parse_operation(op):
     data = op.split()
@@ -69,8 +71,6 @@ def parse_operation(op):
     return Operation(operator, x, y, z)
 
 
-
-
 for op in circuit:
     operation = parse_operation(op)
     print('operation: ', operation, end=' || ')
@@ -108,25 +108,32 @@ for op in circuit:
 
     print('values: ', values)
 
-
 # print(values)
 
 
 # sort alphabetically
 for key, value in sorted(values.items()):
     if value < 0:
-        print(key, 2**16 - value)
+        print(key, 2 ** 16 - value)
     elif value > 0:
         print(key, value)
 
-d 72
-e 507
-f 492
-g 114
-h 65660
-i 65993
-x 123
-y 456
+d
+72
+e
+507
+f
+492
+g
+114
+h
+65660
+i
+65993
+x
+123
+y
+456
 
 # d: 72
 # e: 507
