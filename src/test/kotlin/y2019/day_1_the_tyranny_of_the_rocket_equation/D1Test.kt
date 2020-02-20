@@ -1,9 +1,9 @@
-package y2019.p1
+package y2019.day_1_the_tyranny_of_the_rocket_equation
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-class P1Test {
+class D1Test {
 
     @Test
     fun testCalculateFuelNeeded() {

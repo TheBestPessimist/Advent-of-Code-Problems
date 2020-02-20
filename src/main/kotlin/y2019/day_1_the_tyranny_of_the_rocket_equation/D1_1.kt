@@ -1,4 +1,4 @@
-package y2019.p1
+package y2019.day_1_the_tyranny_of_the_rocket_equation
 
 import loadResourceFile
 
