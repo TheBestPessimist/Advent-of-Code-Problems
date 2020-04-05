@@ -1,4 +1,4 @@
-package y2019.day_3_crossed_wires
+package y2019.day_3_crossed_wires.p1
 
 import loadResourceFile
 import kotlin.math.abs

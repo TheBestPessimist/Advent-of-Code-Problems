@@ -3,8 +3,9 @@ package y2019.day_3_crossed_wires
 import loadResourceFile
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import y2019.day_3_crossed_wires.p1.solve
 
-internal class Day3_1KtTest {
+internal class Day3P1KtTest {
     @Test
     fun `1`() {
         val wire1PathStr = "R8,U5,L5,D3"
@@ -38,7 +39,7 @@ internal class Day3_1KtTest {
     }
 
     @Test
-    fun Day3_1() {
+    fun day3P1() {
         val paths = loadResourceFile("./y2019/day_3_crossed_wires/in1.txt").split("""(\s+)""".toRegex())
 
         val wire1PathStr = paths[0]

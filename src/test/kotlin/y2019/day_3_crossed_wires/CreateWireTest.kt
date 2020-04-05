@@ -1,6 +1,9 @@
 package y2019.day_3_crossed_wires
 
 import org.junit.jupiter.api.Test
+import y2019.day_3_crossed_wires.p1.Position
+import y2019.day_3_crossed_wires.p1.Wire
+import y2019.day_3_crossed_wires.p1.createWire
 import kotlin.test.assertEquals
 
 internal class CreateWireTest {
