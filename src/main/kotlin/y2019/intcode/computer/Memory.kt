@@ -1,4 +1,4 @@
-package y2019.day_2_1202_program_alarm
+package y2019.intcode.computer
 
 class Memory(ints: List<Int>) {
     private val ints = ints.toMutableList()

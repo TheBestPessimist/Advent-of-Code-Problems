@@ -1,8 +1,8 @@
-package y2019.day_2_1202_program_alarm.instructions
+package y2019.intcode.computer.instructions
 
-object AddInstruction : Instruction {
+object MultiplyInstruction : Instruction {
     override fun matches(instructionCode: Int): Boolean {
-        return 1 == instructionCode
+        return 2 == instructionCode
     }
 
     override fun numberOfInputs(): Int {
@@ -10,7 +10,7 @@ object AddInstruction : Instruction {
     }
 
     override fun execute(values: List<Int>): Int {
-        return values[0] + values[1]
+        return values[0] * values[1]
     }
 
     override fun size(): Byte {

@@ -1,6 +1,6 @@
-package y2019.day_2_1202_program_alarm
+package y2019.intcode.computer
 
-import y2019.day_2_1202_program_alarm.instructions.Instruction
+import y2019.intcode.computer.instructions.Instruction
 
 class CPU(private val instructions: List<Instruction>) {
 

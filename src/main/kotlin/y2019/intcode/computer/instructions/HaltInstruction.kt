@@ -1,4 +1,4 @@
-package y2019.day_2_1202_program_alarm.instructions
+package y2019.intcode.computer.instructions
 
 object HaltInstruction : Instruction {
     override fun matches(instructionCode: Int): Boolean {
