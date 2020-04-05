@@ -13,7 +13,7 @@ object HaltInstruction : Instruction {
         TODO("Not yet implemented")
     }
 
-    override fun size(): Byte {
+    override fun size(): Int {
         TODO("Not yet implemented")
     }
 }

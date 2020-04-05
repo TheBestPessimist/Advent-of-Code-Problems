@@ -4,8 +4,7 @@ import land.tbp.y2019.intcode.computer.instructions.Instruction
 
 class CPU(private val instructions: List<Instruction>) {
 
-    fun fetchAndDecode(instructionPointer: Int, memory: Memory): Instruction {
-        val instructionCode = memory.read(instructionPointer)
+    fun fetchAndDecode(instructionCode: Int): Instruction {
 
         for (instruction in instructions) {
             if (instruction.matches(instructionCode)) {

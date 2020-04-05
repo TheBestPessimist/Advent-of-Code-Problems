@@ -13,7 +13,7 @@ object AddInstruction : Instruction {
         return values[0] + values[1]
     }
 
-    override fun size(): Byte {
+    override fun size(): Int {
         return 4
     }
 }

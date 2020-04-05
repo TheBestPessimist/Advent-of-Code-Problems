@@ -7,16 +7,17 @@ class Computer(val memory: Memory,
                private val cpu: CPU) {
 
     fun runProgram(): Int {
-        var instructionPointer = 0
+        var programCounter = 0
 
         while (true) {
-            val instruction: Instruction = cpu.fetchAndDecode(instructionPointer, memory)
+            val opcode = memory.read(programCounter)
+            val instruction: Instruction = cpu.fetchAndDecode(opcode)
 
             if (HaltInstruction == instruction) {
                 return memory.read(0)
             }
-            cpu.execute(instruction, instructionPointer, memory)
-            instructionPointer += instruction.size()
+            cpu.execute(instruction, programCounter, memory)
+            programCounter += instruction.size()
         }
     }
 }
