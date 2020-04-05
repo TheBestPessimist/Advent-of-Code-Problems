@@ -14,7 +14,7 @@ internal class MoveWireOnSingleDirectionTest {
 
         assertEquals(Position(8, 0), lastPosition)
 
-        val expectedWire = Wire(setOf(
+        val expectedWire = Wire(linkedSetOf(
                 Position(0, 0),
                 Position(1, 0),
                 Position(2, 0),
@@ -38,7 +38,7 @@ internal class MoveWireOnSingleDirectionTest {
 
         assertEquals(Position(-8, 0), lastPosition)
 
-        val expectedWire = Wire(setOf(
+        val expectedWire = Wire(linkedSetOf(
                 Position(0, 0),
                 Position(-1, 0),
                 Position(-2, 0),
@@ -62,7 +62,7 @@ internal class MoveWireOnSingleDirectionTest {
 
         assertEquals(Position(0, 8), lastPosition)
 
-        val expectedWire = Wire(setOf(
+        val expectedWire = Wire(linkedSetOf(
                 Position(0, 0),
                 Position(0, 1),
                 Position(0, 2),
@@ -86,7 +86,7 @@ internal class MoveWireOnSingleDirectionTest {
 
         assertEquals(Position(0, -8), lastPosition)
 
-        val expectedWire = Wire(setOf(
+        val expectedWire = Wire(linkedSetOf(
                 Position(0, 0),
                 Position(0, -1),
                 Position(0, -2),
