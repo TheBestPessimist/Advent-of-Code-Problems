@@ -37,27 +37,33 @@ internal class Day3P2KtTest {
         Assertions.assertEquals(410, actual)
     }
 
+    /**
+     * note to self: the instructions are misleading: the cycles inside a wire are left there, they are not removed!
+     */
     @Test
-    fun `1 cycle in the wire`() {
+    fun `1 cycle in the wire DOESN'T MATTER`() {
 
         val wire1PathStr = "R10,D5,L5,U10"
         val wire2PathStr = "U5,R5"
 
         val actual = solve2(wire1PathStr, wire2PathStr)
 
-        Assertions.assertEquals(10 + 10, actual)
+        Assertions.assertEquals(30 + 10, actual)
     }
 
 
+    /**
+     * note to self: the instructions are misleading: the cycles inside a wire are left there, they are not removed!
+     */
     @Test
-    fun `multiple cycles in the wire`() {
+    fun `multiple cycles in the wire DON'T MATTER`() {
 
         val wire1PathStr = "R10,D5,L5,U5,U3,R2,D5,L4,U4,R2,U2"
         val wire2PathStr = "U4,R5"
 
         val actual = solve2(wire1PathStr, wire2PathStr)
 
-        Assertions.assertEquals(9+9, actual)
+        Assertions.assertEquals(47 + 9, actual)
     }
 
 
@@ -68,7 +74,7 @@ internal class Day3P2KtTest {
         val wire1PathStr = paths[0]
         val wire2PathStr = paths[1]
 
-        Assertions.assertEquals(1285, solve2(wire1PathStr, wire2PathStr))
+        Assertions.assertEquals(14228, solve2(wire1PathStr, wire2PathStr))
     }
 
 }
