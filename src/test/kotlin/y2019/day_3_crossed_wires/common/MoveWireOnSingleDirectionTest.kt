@@ -1,9 +1,6 @@
-package y2019.day_3_crossed_wires
+package y2019.day_3_crossed_wires.common
 
 import org.junit.jupiter.api.Test
-import y2019.day_3_crossed_wires.p1.Position
-import y2019.day_3_crossed_wires.p1.Wire
-import y2019.day_3_crossed_wires.p1.moveWireOnSingleDirection
 import kotlin.test.assertEquals
 
 internal class MoveWireOnSingleDirectionTest {
