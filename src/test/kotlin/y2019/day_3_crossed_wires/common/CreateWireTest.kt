@@ -10,7 +10,7 @@ internal class CreateWireTest {
         val wirePathStr = "R8,U5,L5,D3"
 
         val actualWire = createWire(wirePathStr.split(","))
-        val expectedWire = Wire(linkedSetOf(
+        val expectedWire = Wire(arrayListOf(
                 Position(0, 0),
                 Position(1, 0),
                 Position(2, 0),

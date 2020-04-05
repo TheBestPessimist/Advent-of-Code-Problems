@@ -2,7 +2,7 @@ package y2019.day_3_crossed_wires.common
 
 data class WireAndLastPos(val wire: Wire, val lastPosition: Position)
 data class Position(val x: Int, val y: Int)
-data class Wire(val positions: LinkedHashSet<Position>)
+data class Wire(val positions: ArrayList<Position>)
 private enum class Direction(val direction: String) {
     UP("U"),
     DOWN("D"),
@@ -18,14 +18,16 @@ private enum class Direction(val direction: String) {
 }
 
 fun createWire(wirePath: List<String>): Wire {
-    val wirePositions = arrayListOf<Position>()
     var lastPosition = Position(0, 0)
+    val wirePositions = arrayListOf<Position>(lastPosition)
     for (w in wirePath) {
         val wireAndLastPos = moveWireOnSingleDirection(w, lastPosition)
         lastPosition = wireAndLastPos.lastPosition
-        wirePositions.addAll(wireAndLastPos.wire.positions)
+
+        val positions = wireAndLastPos.wire.positions
+        wirePositions.addAll(positions.subList(1, positions.size))
     }
-    return Wire(linkedSetOf(*wirePositions.toTypedArray()))
+    return Wire(wirePositions)
 }
 
 fun moveWireOnSingleDirection(dirAndSteps: String, originPosition: Position): WireAndLastPos {
@@ -66,5 +68,5 @@ fun moveWireOnSingleDirection(dirAndSteps: String, originPosition: Position): Wi
 
         }
     }
-    return WireAndLastPos(Wire(linkedSetOf(*wirePositions.toTypedArray())), lastPosition)
+    return WireAndLastPos(Wire(wirePositions), lastPosition)
 }
