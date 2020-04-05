@@ -4,11 +4,11 @@ package y2019.day_4_secure_container
 fun main() {
     val range = 357253..892942
 
-    println(countNumberOfPasswords(range))
+    println(countNumberOfPasswords2(range))
 }
 
 @ExperimentalStdlibApi
-fun countNumberOfPasswords(range: IntRange): Int {
+fun countNumberOfPasswords2(range: IntRange): Int {
 
     var count = 0
     for (i in range) {
@@ -46,7 +46,9 @@ private fun checkPasswordMatches(digits: List<Int>): Boolean {
 }
 
 private fun exactly2EqualDigits(digits: List<Int>): Boolean {
-    return digits.toSet().size < digits.size
+    return digits.groupingBy { it }
+            .eachCount()
+            .containsValue(2)
 }
 
 private fun allDigitsSmallerEqual(digits: List<Int>): Boolean {
