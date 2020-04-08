@@ -5,15 +5,11 @@ object HaltInstruction : Instruction {
         return 99 == instructionCode
     }
 
-    override fun numberOfInputs(): Int {
-        TODO("Not yet implemented")
-    }
+    override val numberOfInputs = 0
 
     override fun execute(values: List<Int>): Int {
         TODO("Not yet implemented")
     }
 
-    override fun size(): Int {
-        TODO("Not yet implemented")
-    }
+    override val size = 0
 }

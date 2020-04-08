@@ -17,7 +17,7 @@ class Computer(val memory: Memory,
                 return memory.read(0)
             }
             cpu.execute(instruction, programCounter, memory)
-            programCounter += instruction.size()
+            programCounter += instruction.size
         }
     }
 }
