@@ -5,11 +5,9 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import stringToInt
 import land.tbp.y2019.intcode.computer.CPU
-import land.tbp.y2019.intcode.computer.instructions.AddInstruction
-import land.tbp.y2019.intcode.computer.instructions.HaltInstruction
-import land.tbp.y2019.intcode.computer.instructions.MultiplyInstruction
 import land.tbp.y2019.intcode.computer.Computer
 import land.tbp.y2019.intcode.computer.Memory
+import land.tbp.y2019.intcode.computer.instructions.*
 import org.junit.jupiter.api.Nested
 
 internal class ComputerTest {
@@ -85,6 +83,23 @@ internal class ComputerTest {
                             99))
         }
 
+        @Test
+        fun `Day 5 Problem 1`()
+        {
+                val text = loadResourceFile("./land/tbp/y2019/day_5_sunny_with_a_chance_of_asteroids/in1.txt")
+                val ints = stringToInt(text)
+
+                val instructions = arrayListOf(AddInstruction, MultiplyInstruction, InputInstruction, OutputInstruction, HaltInstruction)
+                val outputs = mutableListOf<Int>()
+                Computer(
+                        Memory(ints),
+                        CPU(instructions),
+                        mutableListOf(1),
+                        outputs
+                ).runProgram()
+
+            assertEquals(7988899, outputs.last())
+        }
 
     }
 
