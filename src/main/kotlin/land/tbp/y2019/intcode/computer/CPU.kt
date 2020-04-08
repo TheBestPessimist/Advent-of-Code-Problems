@@ -1,11 +1,11 @@
 package land.tbp.y2019.intcode.computer
 
 import land.tbp.y2019.intcode.computer.instructions.Instruction
+import land.tbp.y2019.intcode.computer.instructions.InstructionParameterMode
 
 class CPU(private val instructions: List<Instruction>) {
 
     fun fetchAndDecode(instructionCode: Int): Instruction {
-
         for (instruction in instructions) {
             if (instruction.matches(instructionCode)) {
                 return instruction
@@ -15,16 +15,25 @@ class CPU(private val instructions: List<Instruction>) {
     }
 
     fun execute(instruction: Instruction, instructionPointer: Int, memory: Memory) {
-        val valuesFromMemory = mutableListOf<Int>()
+        val instructionCode = memory.read(instructionPointer)
 
+        val parameterModes = instruction.computeParameterModes(instructionCode)
 
-        for (i in 0 until instruction.numberOfInputs()) {
-            val readFromAddress = memory.read(instructionPointer + 1 + i)
-            valuesFromMemory.add(memory.read(readFromAddress))
+        val inputValues = mutableListOf<Int>()
+        for (i in 0 until instruction.numberOfInputs) {
+            val positionOrValue = instructionPointer + 1 + i
+            val inputValue = when (parameterModes[i]) {
+                InstructionParameterMode.Position -> {
+                    val readFromAddress = memory.read(positionOrValue)
+                    memory.read(readFromAddress)
+                }
+                InstructionParameterMode.Immediate -> memory.read(positionOrValue)
+            }
+            inputValues.add(inputValue)
         }
-        val outputValue: Int = instruction.execute(valuesFromMemory)
-        val writeToAddress = memory.read(instructionPointer + 1 + instruction.numberOfInputs())
-        memory.set(writeToAddress, outputValue)
 
+        val outputValue: Int = instruction.execute(inputValues)
+        val writeToAddress = memory.read(instructionPointer + 1 + instruction.numberOfInputs)
+        memory.set(writeToAddress, outputValue)
     }
 }

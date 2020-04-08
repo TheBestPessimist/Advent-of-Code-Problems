@@ -11,3 +11,19 @@ fun stringToInt(s: String, regexpDelimiter: Regex = """(,|\s+)""".toRegex()): Li
             .filter { it.isNotBlank() }
             .map { it.toInt() }
 }
+
+
+val Int.digits: List<Int>
+    get() {
+        var n = this
+
+        val digits = mutableListOf<Int>()
+
+        while (n > 0) {
+            val digit = n % 10
+            n /= 10
+            digits.add(digit)
+        }
+
+        return digits.asReversed()
+    }

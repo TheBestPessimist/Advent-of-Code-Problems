@@ -2,7 +2,7 @@ package land.tbp.y2019.intcode.computer.instructions
 
 object AddInstruction : Instruction {
     override fun matches(instructionCode: Int): Boolean {
-        return 1 == instructionCode
+        return 1 == instructionCode % 10
     }
 
     override val numberOfInputs = 2
