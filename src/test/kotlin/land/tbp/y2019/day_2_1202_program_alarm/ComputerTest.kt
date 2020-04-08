@@ -19,10 +19,15 @@ internal class ComputerTest {
 
         @Test
         fun `1`() {
-            executeAndAssert(listOf(1, 9, 10, 3, 2, 3, 11, 0, 99, 30, 40, 50), 3500, listOf(3500, 9, 10, 70,
-                    2, 3, 11, 0,
-                    99,
-                    30, 40, 50))
+            executeAndAssert(
+                    listOf(1, 9, 10, 3,
+                            2, 3, 11, 0,
+                            99, 30, 40, 50),
+                    3500,
+                    listOf(3500, 9, 10, 70,
+                            2, 3, 11, 0,
+                            99,
+                            30, 40, 50))
         }
 
         @Test
@@ -60,6 +65,27 @@ internal class ComputerTest {
         fun `1`() {
             executeAndAssert(listOf(1002, 4, 3, 4, 33), 1002, listOf(1002, 4, 3, 4, 99))
         }
+
+        @Test
+        fun `2`() {
+            executeAndAssert(listOf(1101, 100, -1, 4, 0), 1101, listOf(1101, 100, -1, 4, 99))
+        }
+
+        @Test
+        fun `3`() {
+            executeAndAssert(
+                    listOf(1,0,0,0,
+                    1,9,8,8,
+                    1100,1,1,1,
+            99),
+                    2,
+                    listOf(2,2,0,0,
+                            1,9,8,8,
+                            1101,1,1,1,
+                            99))
+        }
+
+
     }
 
     private fun executeAndAssert(ints: List<Int>, expectedProgramValue: Int, expectedMemory: List<Int>) {
