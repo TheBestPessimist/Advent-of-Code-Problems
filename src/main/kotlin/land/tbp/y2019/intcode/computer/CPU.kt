@@ -20,7 +20,7 @@ class CPU(private val instructions: List<Instruction>) {
         val parameterModes = instruction.computeParameterModes(instructionCode)
 
         val inputValues = mutableListOf<Int>()
-        for (i in 0 until instruction.numberOfInputs) {
+        for (i in 0 until instruction.numberOfParameters-1) {
             val positionOrValue = instructionPointer + 1 + i
             val inputValue = when (parameterModes[i]) {
                 InstructionParameterMode.Position -> {
@@ -33,7 +33,7 @@ class CPU(private val instructions: List<Instruction>) {
         }
 
         val outputValue: Int = instruction.execute(inputValues)
-        val writeToAddress = memory.read(instructionPointer + 1 + instruction.numberOfInputs)
+        val writeToAddress = memory.read(instructionPointer + instruction.numberOfParameters)
         memory.set(writeToAddress, outputValue)
     }
 }

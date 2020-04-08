@@ -5,7 +5,7 @@ object AddInstruction : Instruction {
         return 1 == instructionCode % 10
     }
 
-    override val numberOfInputs = 2
+    override val numberOfParameters = 3
 
     override fun execute(values: List<Int>): Int {
         return values[0] + values[1]

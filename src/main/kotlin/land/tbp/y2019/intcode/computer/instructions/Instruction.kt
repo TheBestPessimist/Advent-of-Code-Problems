@@ -4,8 +4,10 @@ import digits
 
 
 interface Instruction {
-    val numberOfInputs: Int
-    // val numberOfOutputs: Int = 1 // implicit. assume 1 and last position
+    /**
+     * Assume the last parameter is the output
+     */
+    val numberOfParameters: Int
 
     val size: Int
 
