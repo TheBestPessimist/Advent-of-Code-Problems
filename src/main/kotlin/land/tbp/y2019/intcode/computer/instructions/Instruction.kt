@@ -10,6 +10,7 @@ interface Instruction {
     val numberOfParameters: Int
 
     val size: Int
+        get() = numberOfParameters + 1
 
 
     fun matches(instructionCode: Int): Boolean

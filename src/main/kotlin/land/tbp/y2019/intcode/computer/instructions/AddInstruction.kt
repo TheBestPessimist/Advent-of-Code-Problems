@@ -10,6 +10,4 @@ object AddInstruction : Instruction {
     override fun execute(values: List<Int>): Int {
         return values[0] + values[1]
     }
-
-    override val size = 4
 }

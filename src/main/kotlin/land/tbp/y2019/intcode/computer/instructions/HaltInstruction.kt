@@ -10,6 +10,4 @@ object HaltInstruction : Instruction {
     override fun execute(values: List<Int>): Int {
         TODO("Not yet implemented")
     }
-
-    override val size = 1
 }
