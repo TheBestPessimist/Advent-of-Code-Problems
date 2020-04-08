@@ -32,15 +32,18 @@ class CPU(private val instructions: List<Instruction>) {
     private fun handleIOInstructions(instruction: Instruction, memory: Memory, instructionPointer: Int, inputs: MutableList<Int>, outputs: MutableList<Int>) {
         if (instruction == InputInstruction) {
             val outputValue = inputs.removeAt(0)
-            memory.set(instructionPointer + instruction.numberOfParameters, outputValue)
+            val writeToAddress = memory.read(instructionPointer + instruction.numberOfParameters)
+            memory.set(writeToAddress, outputValue)
         } else if (instruction == OutputInstruction) {
-            val outputValue = memory.read(instructionPointer + instruction.numberOfParameters)
+            val readFromAddress = memory.read(instructionPointer + instruction.numberOfParameters)
+            val outputValue = memory.read(readFromAddress)
             outputs.add(outputValue)
+            //todo maybe i should implement CPU.ReadMemeryByParamMode, so that i don't bother with calculating ReadFrom/WriteTo addresses
         }
     }
 
-    private fun handleNonIOInstructions(instruction: Instruction, instructionCode: Int, instructionPointer: Int, memory: Memory) {
-        val parameterModes = instruction.computeParameterModes(instructionCode)
+    private fun handleNonIOInstructions(instruction: Instruction, opCode: Int, instructionPointer: Int, memory: Memory) {
+        val parameterModes = instruction.computeParameterModes(opCode)
 
         val inputValues = mutableListOf<Int>()
         for (i in 0 until instruction.numberOfParameters - 1) {
