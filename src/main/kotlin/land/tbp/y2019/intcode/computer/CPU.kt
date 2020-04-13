@@ -48,34 +48,42 @@ class CPU(
     }
 
     private fun handleIOInstructions(instruction: Instruction) {
+        val position = programCounter + instruction.numberOfParameters
         if (instruction == InputInstruction) {
             val outputValue = inputs.removeAt(0)
-            val writeToAddress = memory.read(programCounter + instruction.numberOfParameters)
+            val writeToAddress = memory.read(position)
             memory.set(writeToAddress, outputValue)
         } else if (instruction == OutputInstruction) {
-            val readFromAddress = memory.read(programCounter + instruction.numberOfParameters)
-            val outputValue = memory.read(readFromAddress)
+            val outputValue = readFromMemory(position, InstructionParameterMode.Position)
             outputs.add(outputValue)
-            //todo maybe i should implement CPU.ReadMemoryByParamMode, so that i don't bother with calculating ReadFrom/WriteTo addresses
         }
     }
 
     private fun handleNonIOInstructions(instruction: Instruction, parameterModes: List<InstructionParameterMode>) {
-        val inputValues = mutableListOf<Int>()
-        for (i in 0 until instruction.numberOfParameters - 1) {
-            val positionOrValue = programCounter + 1 + i
-            val inputValue = when (parameterModes[i]) {
-                InstructionParameterMode.Position -> {
-                    val readFromAddress = memory.read(positionOrValue)
-                    memory.read(readFromAddress)
-                }
-                InstructionParameterMode.Immediate -> memory.read(positionOrValue)
-            }
-            inputValues.add(inputValue)
-        }
+        val inputValues = loadInputsFromMemory(instruction, parameterModes)
 
         val outputValue: Int = instruction.execute(inputValues)
         val writeToAddress = memory.read(programCounter + instruction.numberOfParameters)
         memory.set(writeToAddress, outputValue)
+    }
+
+    private fun loadInputsFromMemory(instruction: Instruction, parameterModes: List<InstructionParameterMode>): MutableList<Int> {
+        val inputValues = mutableListOf<Int>()
+        for (i in 0 until instruction.numberOfParameters - 1) {
+            val positionOrValue = programCounter + 1 + i
+            val inputValue = readFromMemory(positionOrValue, parameterModes[i])
+            inputValues.add(inputValue)
+        }
+        return inputValues
+    }
+
+    private fun readFromMemory(positionOrValue: Int, parameterMode: InstructionParameterMode): Int {
+        return when (parameterMode) {
+            InstructionParameterMode.Position -> {
+                val readFromAddress = memory.read(positionOrValue)
+                memory.read(readFromAddress)
+            }
+            InstructionParameterMode.Immediate -> memory.read(positionOrValue)
+        }
     }
 }
