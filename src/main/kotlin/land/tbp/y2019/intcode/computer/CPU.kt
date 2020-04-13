@@ -60,6 +60,7 @@ class CPU(
     private fun handleIOInstructions(instruction: Instruction, parameterModes: List<InstructionParameterMode>) {
         val position = programCounter + instruction.numberOfParameters
         if (instruction == InputInstruction) {
+            // todo this might need parameterModes handling when writing. not sure.
             val outputValue = inputs.removeAt(0)
             val writeToAddress = memory.read(position)
             memory.write(writeToAddress, outputValue)
