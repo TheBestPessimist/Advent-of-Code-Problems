@@ -10,7 +10,15 @@ class Computer(val memory: Memory,
 
     init {
         // todo would be nice to get the list of instructions dynamically.
-        val instructions = arrayListOf(AddInstruction, MultiplyInstruction, InputInstruction, OutputInstruction, HaltInstruction)
+        val instructions = arrayListOf(
+                AddInstruction,
+                MultiplyInstruction,
+                InputInstruction,
+                OutputInstruction,
+                HaltInstruction,
+                JumpIfTrueInstruction,
+                JumpIfFalseInstruction
+        )
 
         cpu = CPU(instructions, memory, inputs, outputs)
     }

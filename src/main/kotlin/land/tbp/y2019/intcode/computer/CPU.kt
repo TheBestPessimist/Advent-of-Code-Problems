@@ -9,7 +9,7 @@ class CPU(
         private val outputs: MutableList<Int>
 ) {
 
-    private var programCounter = 0
+    internal var programCounter = 0
 
     fun runProgram(): Int {
         while (true) {
@@ -20,7 +20,6 @@ class CPU(
                 return memory.read(0)
             }
             execute(instruction)
-            programCounter += instruction.size
         }
     }
 
@@ -36,14 +35,25 @@ class CPU(
 
     private fun execute(instruction: Instruction) {
         val instructionCode = memory.read(programCounter)
+        val parameterModes = instruction.computeParameterModes(instructionCode)
 
         // This if will come later to bite my ass.
         // I believe the IO should be added to the normal flow and instructions, but i'm too lazy to do that now.
-        if (instruction in listOf(InputInstruction, OutputInstruction)) {
-            handleIOInstructions(instruction)
-        } else {
-            val parameterModes = instruction.computeParameterModes(instructionCode)
-            handleNonIOInstructions(instruction, parameterModes)
+        when (instruction) {
+            in listOf(InputInstruction, OutputInstruction) -> {
+                handleIOInstructions(instruction)
+                programCounter += instruction.size
+            }
+            is JumpIfTrueInstruction -> {
+                instruction.doIt(this, parameterModes)
+            }
+            is JumpIfFalseInstruction -> {
+                instruction.doIt(this, parameterModes)
+            }
+            else -> {
+                handleNonIOInstructions(instruction, parameterModes)
+                programCounter += instruction.size
+            }
         }
     }
 
@@ -69,12 +79,15 @@ class CPU(
 
     private fun loadInputsFromMemory(instruction: Instruction, parameterModes: List<InstructionParameterMode>): MutableList<Int> {
         val inputValues = mutableListOf<Int>()
-        for (i in 0 until instruction.numberOfParameters - 1) {
-            val positionOrValue = programCounter + 1 + i
-            val inputValue = readFromMemory(positionOrValue, parameterModes[i])
+        for (parameterNumber in 0 until instruction.numberOfParameters - 1) {
+            val inputValue = loadParameter(parameterNumber, parameterModes[parameterNumber])
             inputValues.add(inputValue)
         }
         return inputValues
+    }
+
+    internal fun loadParameter(parameterNumber: Int, parameterMode: InstructionParameterMode): Int {
+        return readFromMemory(programCounter + 1 + parameterNumber, parameterMode)
     }
 
     private fun readFromMemory(positionOrValue: Int, parameterMode: InstructionParameterMode): Int {
