@@ -1,14 +1,12 @@
 package land.tbp.y2019.day_2_1202_program_alarm
 
-import loadResourceFile
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Test
-import stringToInt
-import land.tbp.y2019.intcode.computer.CPU
 import land.tbp.y2019.intcode.computer.Computer
 import land.tbp.y2019.intcode.computer.Memory
-import land.tbp.y2019.intcode.computer.instructions.*
+import loadResourceFile
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import stringToInt
 
 internal class ComputerTest {
 
@@ -72,31 +70,28 @@ internal class ComputerTest {
         @Test
         fun `3`() {
             executeAndAssert(
-                    listOf(1,0,0,0,
-                    1,9,8,8,
-                    1100,1,1,1,
-            99),
+                    listOf(1, 0, 0, 0,
+                            1, 9, 8, 8,
+                            1100, 1, 1, 1,
+                            99),
                     2,
-                    listOf(2,2,0,0,
-                            1,9,8,8,
-                            1101,1,1,1,
+                    listOf(2, 2, 0, 0,
+                            1, 9, 8, 8,
+                            1101, 1, 1, 1,
                             99))
         }
 
         @Test
-        fun `Day 5 Problem 1`()
-        {
-                val text = loadResourceFile("./land/tbp/y2019/day_5_sunny_with_a_chance_of_asteroids/in1.txt")
-                val ints = stringToInt(text)
+        fun `Day 5 Problem 1`() {
+            val text = loadResourceFile("./land/tbp/y2019/day_5_sunny_with_a_chance_of_asteroids/in1.txt")
+            val ints = stringToInt(text)
 
-                val instructions = arrayListOf(AddInstruction, MultiplyInstruction, InputInstruction, OutputInstruction, HaltInstruction)
-                val outputs = mutableListOf<Int>()
-                Computer(
-                        Memory(ints),
-                        CPU(instructions),
-                        mutableListOf(1),
-                        outputs
-                ).runProgram()
+            val outputs = mutableListOf<Int>()
+            Computer(
+                    Memory(ints),
+                    mutableListOf(1),
+                    outputs
+            ).runProgram()
 
             assertEquals(7988899, outputs.last())
         }
@@ -106,11 +101,7 @@ internal class ComputerTest {
     private fun executeAndAssert(ints: List<Int>, expectedProgramValue: Int, expectedMemory: List<Int>) {
         val memory = Memory(ints)
 
-        val instructions = listOf(AddInstruction, MultiplyInstruction, HaltInstruction)
-        val computer = Computer(
-                memory,
-                CPU(instructions)
-        )
+        val computer = Computer(memory)
         val programResult = computer.runProgram()
         assertEquals(expectedProgramValue, programResult)
 

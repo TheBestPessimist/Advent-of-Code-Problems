@@ -1,13 +1,27 @@
 package land.tbp.y2019.intcode.computer
 
-import land.tbp.y2019.intcode.computer.instructions.InputInstruction
-import land.tbp.y2019.intcode.computer.instructions.Instruction
-import land.tbp.y2019.intcode.computer.instructions.InstructionParameterMode
-import land.tbp.y2019.intcode.computer.instructions.OutputInstruction
+import land.tbp.y2019.intcode.computer.instructions.*
 
-class CPU(private val instructions: List<Instruction>) {
+class CPU(private val instructions: List<Instruction>, private val memory: Memory, private val inputs: MutableList<Int>, private val outputs: MutableList<Int>) {
 
-    fun fetchAndDecode(instructionCode: Int): Instruction {
+    private var programCounter = 0
+
+    fun runProgram(): Int {
+
+        while (true) {
+            val opcode = memory.read(programCounter)
+            val instruction: Instruction = fetchAndDecode(opcode)
+
+            if (HaltInstruction == instruction) {
+                return memory.read(0)
+            }
+            execute(instruction, programCounter, memory, inputs, outputs)
+            programCounter += instruction.size
+        }
+    }
+
+
+    private fun fetchAndDecode(instructionCode: Int): Instruction {
         for (instruction in instructions) {
             if (instruction.matches(instructionCode)) {
                 return instruction
@@ -16,7 +30,7 @@ class CPU(private val instructions: List<Instruction>) {
         throw Exception("Unknown Instruction $instructionCode")
     }
 
-    fun execute(instruction: Instruction, instructionPointer: Int, memory: Memory, inputs: MutableList<Int>, outputs: MutableList<Int>) {
+    private fun execute(instruction: Instruction, instructionPointer: Int, memory: Memory, inputs: MutableList<Int>, outputs: MutableList<Int>) {
         val instructionCode = memory.read(instructionPointer)
 
 
@@ -38,7 +52,7 @@ class CPU(private val instructions: List<Instruction>) {
             val readFromAddress = memory.read(instructionPointer + instruction.numberOfParameters)
             val outputValue = memory.read(readFromAddress)
             outputs.add(outputValue)
-            //todo maybe i should implement CPU.ReadMemeryByParamMode, so that i don't bother with calculating ReadFrom/WriteTo addresses
+            //todo maybe i should implement CPU.ReadMemoryByParamMode, so that i don't bother with calculating ReadFrom/WriteTo addresses
         }
     }
 
