@@ -1,7 +1,5 @@
-package land.tbp.y2019.day_2_1202_program_alarm
+package land.tbp.y2019.intcode.computer
 
-import land.tbp.y2019.intcode.computer.Computer
-import land.tbp.y2019.intcode.computer.Memory
 import loadResourceFile
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Nested
