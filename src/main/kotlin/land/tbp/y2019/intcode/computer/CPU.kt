@@ -41,7 +41,7 @@ class CPU(
         // I believe the IO should be added to the normal flow and instructions, but i'm too lazy to do that now.
         when (instruction) {
             in listOf(InputInstruction, OutputInstruction) -> {
-                handleIOInstructions(instruction)
+                handleIOInstructions(instruction, parameterModes)
                 programCounter += instruction.size
             }
             is JumpIfTrueInstruction -> {
@@ -57,14 +57,14 @@ class CPU(
         }
     }
 
-    private fun handleIOInstructions(instruction: Instruction) {
+    private fun handleIOInstructions(instruction: Instruction, parameterModes: List<InstructionParameterMode>) {
         val position = programCounter + instruction.numberOfParameters
         if (instruction == InputInstruction) {
             val outputValue = inputs.removeAt(0)
             val writeToAddress = memory.read(position)
-            memory.set(writeToAddress, outputValue)
+            memory.write(writeToAddress, outputValue)
         } else if (instruction == OutputInstruction) {
-            val outputValue = readFromMemory(position, InstructionParameterMode.Position)
+            val outputValue = readFromMemory(position, parameterModes[0])
             outputs.add(outputValue)
         }
     }
@@ -74,7 +74,7 @@ class CPU(
 
         val outputValue: Int = instruction.execute(inputValues)
         val writeToAddress = memory.read(programCounter + instruction.numberOfParameters)
-        memory.set(writeToAddress, outputValue)
+        memory.write(writeToAddress, outputValue)
     }
 
     private fun loadInputsFromMemory(instruction: Instruction, parameterModes: List<InstructionParameterMode>): MutableList<Int> {
