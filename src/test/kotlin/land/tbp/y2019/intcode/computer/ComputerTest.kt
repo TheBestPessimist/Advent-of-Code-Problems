@@ -125,7 +125,16 @@ internal class ComputerTest {
             executeAndAssertOutput(ints, inputs, outputs)
         }
 
+        @Test
+        fun `Day 5 Problem 2`() {
+            val text = loadResourceFile("./land/tbp/y2019/day_5_sunny_with_a_chance_of_asteroids/in1.txt")
+            val ints = stringToInt(text)
 
+            val inputs = listOf(5)
+            val outputs = listOf(13758663)
+
+            executeAndAssertOutput(ints, inputs, outputs)
+        }
     }
 
     @Nested
