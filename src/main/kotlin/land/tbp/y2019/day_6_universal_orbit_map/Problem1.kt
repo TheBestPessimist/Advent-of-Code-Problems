@@ -1,33 +1,43 @@
 package land.tbp.y2019.day_6_universal_orbit_map
 
+import loadResourceFile
+
 fun main() {
     val root = solve()
     println(root)
     val totalNumberOfOrbits = computeTotalNumberOfOrbits(root)
-    println(totalNumberOfOrbits)
+    println(totalNumberOfOrbits) // solution is 154386
 
 }
 
 internal fun solve(): Node {
-    val s = """
-        COM)B
-        B)C
-        C)D
-        D)E
-        E)F
-        B)G
-        G)H
-        D)I
-        E)J
-        J)K
-        K)L
-        """.trimIndent()
+//    val s = """
+//        COM)B
+//        B)C
+//        C)D
+//        D)E
+//        E)F
+//        B)G
+//        G)H
+//        D)I
+//        E)J
+//        J)K
+//        K)L
+//        """.trimIndent()
 
-    val lines = s.split("\n")
-    val pairs = lines.map {
-        val split = it.split(")")
-        split[0] to split[1]
-    }.toMutableList()
+    val s = loadResourceFile("./land/tbp/y2019/day_6_universal_orbit_map/in1.txt")
+
+
+    val lines = s.lines()
+
+    println(lines)
+
+    val pairs = lines
+            .filter { it.isNotBlank() }
+            .map {
+                val split = it.split(")")
+                split[0] to split[1]
+            }.toMutableList()
 
     val root = Node("COM")
     makeTree(root, pairs)
