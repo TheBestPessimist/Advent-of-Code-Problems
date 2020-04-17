@@ -1,16 +1,18 @@
 package land.tbp.y2019.day_6_universal_orbit_map
 
+import land.tbp.y2019.tree.Node
+import land.tbp.y2019.tree.Tree
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
 internal class Problem1KtTest {
     @Test
-    fun `Tree Equals Same Child Order Tree`() {
+    fun `Equals works for Trees with same child order`() {
         val root = Node("COM")
-        val b = Node("B");
-        val c = Node("C");
-        val g = Node("G");
-        val h = Node("H");
+        val b = Node("B")
+        val c = Node("C")
+        val g = Node("G")
+        val h = Node("H")
 
         root.addChild(b)
         root.addChild(c)
@@ -19,11 +21,11 @@ internal class Problem1KtTest {
 
 
         val root1 = Node("COM")
-        val b1 = Node("B");
-        val c1 = Node("C");
+        val b1 = Node("B")
+        val c1 = Node("C")
 
-        val g1 = Node("G");
-        val h1 = Node("H");
+        val g1 = Node("G")
+        val h1 = Node("H")
 
         root1.addChild(b1)
         root1.addChild(c1)
@@ -34,12 +36,12 @@ internal class Problem1KtTest {
     }
 
     @Test
-    fun `Tree Equals Different Child Order Tree`() {
+    fun `Equals works for Trees with different child order`() {
         val root = Node("COM")
-        val b = Node("B");
-        val c = Node("C");
-        val g = Node("G");
-        val h = Node("H");
+        val b = Node("B")
+        val c = Node("C")
+        val g = Node("G")
+        val h = Node("H")
 
         root.addChild(b)
         root.addChild(c)
@@ -48,11 +50,11 @@ internal class Problem1KtTest {
 
 
         val root1 = Node("COM")
-        val b1 = Node("B");
-        val c1 = Node("C");
+        val b1 = Node("B")
+        val c1 = Node("C")
 
-        val g1 = Node("G");
-        val h1 = Node("H");
+        val g1 = Node("G")
+        val h1 = Node("H")
 
         root1.addChild(c1) // here C is added before B
         root1.addChild(b1)
@@ -64,8 +66,31 @@ internal class Problem1KtTest {
 
     @Test
     fun `Tree Is Build Correctly`() {
-        val actual = solve()
+        val s = """
+        COM)B
+        B)C
+        C)D
+        D)E
+        E)F
+        B)G
+        G)H
+        D)I
+        E)J
+        J)K
+        K)L
+        """.trimIndent()
 
+        val pairs = s
+                .lines()
+                .filter { it.isNotBlank() }
+                .map {
+                    val split = it.split(")")
+                    split[0] to split[1]
+                }.toList()
+
+        val actual = Tree.buildTree("COM", pairs)
+
+        // create the tree manually
         val root = Node("COM")
         val b = Node("B"); root.addChild(b)
         val g = Node("G"); b.addChild(g)
@@ -81,8 +106,8 @@ internal class Problem1KtTest {
         val j = Node("J"); e.addChild(j)
         val k = Node("K"); j.addChild(k)
         val l = Node("L"); k.addChild(l)
+        val expected = Tree.of(root)
 
-
-        assertEquals(root, actual)
+        assertEquals(expected, actual)
     }
 }
