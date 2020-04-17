@@ -7,7 +7,20 @@ class Tree {
     internal lateinit var root: Node
 
     companion object {
-        fun buildTree(rootValue: String, nodeParentAndChildValues: List<NodeParentAndChildValues>): Tree {
+        internal fun buildFromInputString(rootValue: String, input: String): Tree {
+            val lines = input.lines()
+
+            val pairs = lines
+                    .filter { it.isNotBlank() }
+                    .map {
+                        val split = it.split(")")
+                        split[0] to split[1]
+                    }.toList()
+
+            return buildTree(rootValue, pairs)
+        }
+
+        private fun buildTree(rootValue: String, nodeParentAndChildValues: List<NodeParentAndChildValues>): Tree {
             fun makeTree(parent: Node, pairs: MutableList<NodeParentAndChildValues>) {
                 val filtered = pairs.filter { it.first == parent.value }
                 pairs.removeAll(filtered)

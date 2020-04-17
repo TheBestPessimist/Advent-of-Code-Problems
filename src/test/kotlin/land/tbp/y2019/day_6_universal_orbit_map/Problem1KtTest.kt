@@ -80,15 +80,7 @@ internal class Problem1KtTest {
         K)L
         """.trimIndent()
 
-        val pairs = s
-                .lines()
-                .filter { it.isNotBlank() }
-                .map {
-                    val split = it.split(")")
-                    split[0] to split[1]
-                }.toList()
-
-        val actual = Tree.buildTree("COM", pairs)
+        val actual = Tree.buildFromInputString("COM", s)
 
         // create the tree manually
         val root = Node("COM")
@@ -109,5 +101,27 @@ internal class Problem1KtTest {
         val expected = Tree.of(root)
 
         assertEquals(expected, actual)
+    }
+
+    @Test
+    fun `1`() {
+        val s = """
+            COM)B
+            B)C
+            C)D
+            D)E
+            E)F
+            B)G
+            G)H
+            D)I
+            E)J
+            J)K
+            K)L
+            """.trimIndent()
+
+        val tree = Tree.buildFromInputString("COM", s)
+
+        val actual = computeTotalNumberOfOrbits(tree)
+        assertEquals(42, actual)
     }
 }
