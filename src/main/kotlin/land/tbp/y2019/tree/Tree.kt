@@ -1,7 +1,7 @@
 package land.tbp.y2019.tree
 
 
-typealias NodeParentAndChildValues = Pair<String, String>
+internal typealias NodeParentAndChildValues = Pair<String, String>
 
 class Tree {
     internal lateinit var root: Node
@@ -42,6 +42,44 @@ class Tree {
             tree.root = root
             return tree
         }
+    }
+
+    fun getNode(nodeValue: String): Node {
+        fun getNode(currNode: Node, expectedValue: String): Node? {
+            if (currNode.value == expectedValue) {
+                return currNode
+            }
+            return currNode.children
+                    .mapNotNull { getNode(it, expectedValue) }
+                    .firstOrNull()
+        }
+
+        return getNode(root, nodeValue)!!
+    }
+
+    private fun getParents(node: Node): List<String> {
+        if (node.parent == null) {
+            return listOf(node.value)
+        }
+        return listOf(node.value) + getParents(node.parent!!)
+    }
+
+    fun getClosestCommonAncestor(nodeValue1: String, nodeValue2: String): Node {
+        val node1 = getNode(nodeValue1)
+        val parents1 = getParents(node1).asReversed()
+
+        val node2 = getNode(nodeValue2)
+        val parents2 = getParents(node2).asReversed()
+
+        val last = parents1.intersect(parents2).last()
+        return getNode(last)
+    }
+
+    fun getDistanceBetweenNodes(nodeValue1: String, nodeValue2: String): Int {
+        val common = getClosestCommonAncestor(nodeValue1, nodeValue2)
+        val node1 = getNode(nodeValue1)
+        val node2 = getNode(nodeValue2)
+        return node1.depth + node2.depth - 2 * common.depth - 2
     }
 
     override fun equals(other: Any?): Boolean {
