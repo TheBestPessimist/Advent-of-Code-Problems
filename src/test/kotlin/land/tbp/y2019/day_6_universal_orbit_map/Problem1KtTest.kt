@@ -124,4 +124,9 @@ internal class Problem1KtTest {
         val actual = computeTotalNumberOfOrbits(tree)
         assertEquals(42, actual)
     }
+
+    @Test
+    fun problem1() {
+        assertEquals(154386, solve())
+    }
 }

@@ -1,100 +1,29 @@
 package land.tbp.y2019.day_6_universal_orbit_map
 
+import land.tbp.y2019.tree.Node
+import land.tbp.y2019.tree.Tree
 import loadResourceFile
 
 fun main() {
-    val root = solve()
-    println(root)
-    val totalNumberOfOrbits = computeTotalNumberOfOrbits(root)
-    println(totalNumberOfOrbits) // solution is 154386
-
+    val totalNumberOfOrbits = solve()
+    println(totalNumberOfOrbits)
 }
 
-internal fun solve(): Node {
-//    val s = """
-//        COM)B
-//        B)C
-//        C)D
-//        D)E
-//        E)F
-//        B)G
-//        G)H
-//        D)I
-//        E)J
-//        J)K
-//        K)L
-//        """.trimIndent()
 
+internal fun solve(): Int {
     val s = loadResourceFile("./land/tbp/y2019/day_6_universal_orbit_map/in1.txt")
 
+    val tree = Tree.buildFromInputString("COM", s)
 
-    val lines = s.lines()
-
-    println(lines)
-
-    val pairs = lines
-            .filter { it.isNotBlank() }
-            .map {
-                val split = it.split(")")
-                split[0] to split[1]
-            }.toMutableList()
-
-    val root = Node("COM")
-    makeTree(root, pairs)
-
-    return root
-}
-
-private fun computeTotalNumberOfOrbits(node: Node): Int {
-    return node.depth + node.children.map { computeTotalNumberOfOrbits(it) }.sum()
-}
-
-private fun makeTree(parent: Node, pairs: MutableList<Pair<String, String>>) {
-    val filtered = pairs.filter { it.first == parent.value }
-    pairs.removeAll(filtered)
-
-    filtered.forEach {
-        val child = Node(it.second)
-        parent.addChild(child)
-        makeTree(child, pairs)
-    }
+    return computeTotalNumberOfOrbits(tree)
 }
 
 
-class Node(val value: String) {
-    var parent: Node? = null
-    val children = mutableListOf<Node>()
-    var depth: Int = 0
-
-    fun addChild(child: Node) {
-        children.add(child)
-        children.sortBy { it.value }
-        child.parent = this
-        child.depth = depth + 1
+fun computeTotalNumberOfOrbits(tree: Tree): Int {
+    fun computeTotalNumberOfOrbits(node: Node): Int {
+        return node.depth + node.children.map { computeTotalNumberOfOrbits(it) }.sum()
     }
-
-    override fun toString(): String {
-        return "$value-$depth" + (children.map { it.toString() })
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Node
-
-        if (value != other.value) return false
-        if (children != other.children) return false
-        if (depth != other.depth) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = value.hashCode()
-        result = 31 * result + children.hashCode()
-        result = 31 * result + depth
-        return result
-    }
-
+    return computeTotalNumberOfOrbits(tree.root)
 }
+
+
