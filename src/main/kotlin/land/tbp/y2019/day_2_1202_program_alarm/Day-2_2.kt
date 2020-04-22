@@ -6,7 +6,7 @@ import loadResourceFile
 import stringToInt
 
 fun main() {
-    val text = loadResourceFile("./y2019/day_2_1202_program_alarm/in1.txt")
+    val text = loadResourceFile("./land/tbp/y2019/day_2_1202_program_alarm/in1.txt")
     val ints = stringToInt(text)
     val expectedProgramResult = 19690720
 
@@ -20,7 +20,9 @@ fun main() {
             val computer = Computer(
                     Memory(localInts)
             )
-            val programResult = computer.runProgram()
+            computer.runProgram()
+
+            val programResult = computer.memory.read(0)
 
             if (expectedProgramResult == programResult) {
                 val response = 100 * noun + verb

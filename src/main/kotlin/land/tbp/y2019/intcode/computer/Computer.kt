@@ -25,7 +25,29 @@ class Computer(val memory: Memory,
         cpu = CPU(instructions, memory, inputs, outputs)
     }
 
-    fun runProgram(): Int {
-        return cpu.runProgram()
+    fun runProgram() {
+        cpu.runProgram()
+    }
+
+    fun executionFinished(): Boolean {
+        return ExecutionState.Finished == cpu.executionState
+    }
+}
+
+
+fun scheduleMultipleComputersToRun(vararg computers: Computer) {
+    var i = 0
+
+    while (true) {
+
+        val computer = computers[i]
+        if (!computer.executionFinished()) {
+            computer.runProgram()
+        }
+        i = (i + 1) % computers.size
+
+        if (!computers.any { !it.executionFinished() }) {
+            return
+        }
     }
 }

@@ -11,13 +11,17 @@ class CPU(
 
     internal var programCounter = 0
 
-    fun runProgram(): Int {
-        while (true) {
+    internal var executionState: ExecutionState = ExecutionState.Running
+
+    fun runProgram() {
+        executionState = ExecutionState.Running
+        while (executionState == ExecutionState.Running) {
             val opcode = memory.read(programCounter)
             val instruction: Instruction = fetchAndDecode(opcode)
 
             if (HaltInstruction == instruction) {
-                return memory.read(0)
+                executionState = ExecutionState.Finished
+                return
             }
             execute(instruction)
         }
@@ -42,7 +46,6 @@ class CPU(
         when (instruction) {
             in listOf(InputInstruction, OutputInstruction) -> {
                 handleIOInstructions(instruction, parameterModes)
-                programCounter += instruction.size
             }
             is JumpIfTrueInstruction -> {
                 instruction.doIt(this, parameterModes)
@@ -61,6 +64,10 @@ class CPU(
         val position = programCounter + instruction.numberOfParameters
         if (instruction == InputInstruction) {
             // todo this might need parameterModes handling when writing. not sure.
+            if (inputs.isEmpty()) {
+                executionState = ExecutionState.WaitingForInput
+                return
+            }
             val outputValue = inputs.removeAt(0)
             val writeToAddress = memory.read(position)
             memory.write(writeToAddress, outputValue)
@@ -68,6 +75,7 @@ class CPU(
             val outputValue = readFromMemory(position, parameterModes[0])
             outputs.add(outputValue)
         }
+        programCounter += instruction.size
     }
 
     private fun handleNonIOInstructions(instruction: Instruction, parameterModes: List<InstructionParameterMode>) {
@@ -100,4 +108,8 @@ class CPU(
             InstructionParameterMode.Immediate -> memory.read(positionOrValue)
         }
     }
+}
+
+enum class ExecutionState {
+    Running, WaitingForInput, Finished
 }
