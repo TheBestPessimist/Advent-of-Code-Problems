@@ -43,7 +43,9 @@ interface Instruction {
 
 enum class InstructionParameterMode(private val mode: Int) {
     Position(0),
-    Immediate(1);
+    Immediate(1),
+    Relative(2)
+    ;
 
     companion object {
         private val map = values().associateBy(InstructionParameterMode::mode)

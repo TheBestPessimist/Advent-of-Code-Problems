@@ -13,6 +13,8 @@ class CPU(
 
     internal var executionState: ExecutionState = ExecutionState.Running
 
+    internal var relativeBase = 0
+
     fun runProgram() {
         executionState = ExecutionState.Running
         while (executionState == ExecutionState.Running) {
@@ -47,10 +49,18 @@ class CPU(
             in listOf(InputInstruction, OutputInstruction) -> {
                 handleIOInstructions(instruction, parameterModes)
             }
+            /* todo: why do I get the error "Unresolved reference doIt" ?
+            is JumpIfTrueInstruction, JumpIfFalseInstruction -> {
+                instruction.doIt(this, parameterModes)
+            }
+            */
             is JumpIfTrueInstruction -> {
                 instruction.doIt(this, parameterModes)
             }
             is JumpIfFalseInstruction -> {
+                instruction.doIt(this, parameterModes)
+            }
+            is AdjustRelativeBaseInstruction -> {
                 instruction.doIt(this, parameterModes)
             }
             else -> {
@@ -106,6 +116,10 @@ class CPU(
                 memory.read(readFromAddress)
             }
             InstructionParameterMode.Immediate -> memory.read(positionOrValue)
+            InstructionParameterMode.Relative -> {
+                val readFromAddress = relativeBase + positionOrValue
+                memory.read(readFromAddress)
+            }
         }
     }
 }

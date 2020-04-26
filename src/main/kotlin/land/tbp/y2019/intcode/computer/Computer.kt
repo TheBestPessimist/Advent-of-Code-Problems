@@ -19,7 +19,8 @@ class Computer(val memory: Memory,
                 JumpIfTrueInstruction,
                 JumpIfFalseInstruction,
                 LessThanInstruction,
-                EqualsToInstruction
+                EqualsToInstruction,
+                AdjustRelativeBaseInstruction
         )
 
         cpu = CPU(instructions, memory, inputs, outputs)

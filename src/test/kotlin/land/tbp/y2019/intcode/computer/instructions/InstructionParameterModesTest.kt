@@ -1,6 +1,6 @@
 package land.tbp.y2019.intcode.computer.instructions
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 internal class InstructionParameterModesTest {
@@ -53,5 +53,13 @@ internal class InstructionParameterModesTest {
         val parameterModes = instruction.computeParameterModes(11002)
 
         assertEquals(listOf(InstructionParameterMode.Position, InstructionParameterMode.Immediate, InstructionParameterMode.Immediate), parameterModes)
+    }
+
+    @Test
+    fun `All parameters present, Test relative decoding`() {
+        val instruction: Instruction = MultiplyInstruction
+        val parameterModes = instruction.computeParameterModes(10202)
+
+        assertEquals(listOf(InstructionParameterMode.Relative, InstructionParameterMode.Position, InstructionParameterMode.Immediate), parameterModes)
     }
 }
