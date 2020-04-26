@@ -16,7 +16,7 @@ interface Instruction {
     fun matches(instructionCode: Int): Boolean
 
 
-    fun execute(values: List<Int>): Int
+    fun execute(values: MutableList<Long>): Long
 
 
     fun computeParameterModes(opCode: Int): List<InstructionParameterMode> {

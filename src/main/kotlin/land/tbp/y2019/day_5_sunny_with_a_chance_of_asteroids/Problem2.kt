@@ -9,7 +9,7 @@ fun main() {
     val text = loadResourceFile("./land/tbp/y2019/day_5_sunny_with_a_chance_of_asteroids/in1.txt")
     val ints = stringToInt(text)
 
-    val outputs = mutableListOf<Int>()
+    val outputs = mutableListOf<Long>()
     Computer(
             Memory(ints),
             mutableListOf(5),

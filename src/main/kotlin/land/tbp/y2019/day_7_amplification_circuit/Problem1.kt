@@ -51,15 +51,15 @@ private tailrec fun calculateOutput(ints: List<Int>, phaseInputs: List<Int>, com
         return computedInputSignal
     }
 
-    val inputs = mutableListOf<Int>(phaseInputs[0], computedInputSignal)
-    val outputs = mutableListOf<Int>()
+    val inputs = mutableListOf(phaseInputs[0], computedInputSignal)
+    val outputs = mutableListOf<Long>()
     Computer(
             Memory(ints),
-            inputs,
+            inputs.map { it.toLong() }.toMutableList(),
             outputs)
             .runProgram()
 
-    return calculateOutput(ints, phaseInputs.drop(1), outputs[0])
+    return calculateOutput(ints, phaseInputs.drop(1), outputs[0].toInt())
 }
 
 

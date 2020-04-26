@@ -13,10 +13,10 @@ fun main() {
 }
 
 
-internal fun solve2(s: String): Int {
-    val ints = stringToInt(s)
+internal fun solve2(s: String): Long {
+    val ints = stringToInt(s).map { it.toLong() }
 
-    val outputs = mutableListOf<Int>()
+    val outputs = mutableListOf<Long>()
     val intRange = 5..9
     for (i1 in intRange) {
         for (i2 in intRange) {
@@ -28,8 +28,8 @@ internal fun solve2(s: String): Int {
                             continue
                         }
 
-                        val initialInputSignal = 0
-                        val output = calculateOutput(ints, phaseInputs, initialInputSignal)
+                        val initialInputSignal = 0L
+                        val output = calculateOutput(ints, phaseInputs.map { it.toLong() }, initialInputSignal)
                         outputs.addAll(output)
                     }
                 }
@@ -49,7 +49,7 @@ private fun phaseInputsValid(phaseInputs: List<Int>): Boolean {
 }
 
 @Suppress("UnnecessaryVariable", "SameParameterValue")
-private fun calculateOutput(ints: List<Int>, phaseInputs: List<Int>, computedInputSignal: Int): MutableList<Int> {
+private fun calculateOutput(ints: List<Long>, phaseInputs: List<Long>, computedInputSignal: Long): MutableList<Long> {
 
     val inputs1 = mutableListOf(phaseInputs[0], computedInputSignal)
     val outputs1 = mutableListOf(phaseInputs[1])

@@ -82,7 +82,7 @@ internal class ComputerTest {
             val text = loadResourceFile("./land/tbp/y2019/day_5_sunny_with_a_chance_of_asteroids/in1.txt")
             val ints = stringToInt(text)
 
-            val outputs = mutableListOf<Int>()
+            val outputs = mutableListOf<Long>()
             Computer(
                     Memory(ints),
                     mutableListOf(1),
@@ -196,6 +196,18 @@ internal class ComputerTest {
     }
 
     @Nested
+    internal inner class Day9 {
+        @Test
+        fun `large numbers are supported`() {
+            val ints = listOf(1102, 34915192, 34915192, 7, 4, 7, 99, 0)
+            val inputs = listOf<Int>()
+            val outputs = listOf(1219070632396864)
+
+            executeAndAssertOutput(ints, inputs, outputs)
+        }
+    }
+
+    @Nested
     internal inner class ComparisonTests {
 
         @Test
@@ -278,17 +290,17 @@ internal class ComputerTest {
     private fun executeAndAssertOutput(
             initialMemoryContent: List<Int>,
             initialInputs: List<Int>,
-            expectedOutputs: List<Int>
+            expectedOutputs: List<Number>
     ) {
 
-        val actualOutputs = mutableListOf<Int>()
+        val actualOutputs = mutableListOf<Long>()
         Computer(
                 Memory(initialMemoryContent),
-                initialInputs.toMutableList(),
+                initialInputs.map { it.toLong() }.toMutableList(),
                 actualOutputs
         ).runProgram()
 
-        assertEquals(expectedOutputs, actualOutputs)
+        assertEquals(expectedOutputs.map { it.toLong() }.toList(), actualOutputs.toList())
     }
 
     private fun executeAndAssertMemory(
@@ -302,9 +314,9 @@ internal class ComputerTest {
         val programResult = memory.read(0)
 
         if (expectedMemory.size > 1) {
-            assertEquals(expectedMemory, computer.memory.contents())
+            assertEquals(expectedMemory.map { it.toLong() }.toList(), computer.memory.contents())
         } else {
-            assertEquals(expectedMemory[0], programResult)
+            assertEquals(expectedMemory[0].toLong(), programResult)
         }
     }
 }

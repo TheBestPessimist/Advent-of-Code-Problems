@@ -7,11 +7,11 @@ class Memory(ints: List<Int>) {
         ints[position] = value
     }
 
-    fun read(position: Int): Int {
+    fun read(position: Int): Long {
         return ints[position]
     }
 
-    fun contents(): List<Int> {
+    fun contents(): List<Long> {
         return ints.toList()
     }
 

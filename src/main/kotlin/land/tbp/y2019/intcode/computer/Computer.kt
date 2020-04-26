@@ -3,8 +3,8 @@ package land.tbp.y2019.intcode.computer
 import land.tbp.y2019.intcode.computer.instructions.*
 
 class Computer(val memory: Memory,
-               private val inputs: MutableList<Int> = mutableListOf(),
-               private val outputs: MutableList<Int> = mutableListOf()) {
+               private val inputs: MutableList<Long> = mutableListOf(),
+               private val outputs: MutableList<Long> = mutableListOf()) {
 
     private val cpu: CPU
 

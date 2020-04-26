@@ -7,7 +7,7 @@ object HaltInstruction : Instruction {
 
     override val numberOfParameters = 0
 
-    override fun execute(values: List<Int>): Int {
+    override fun execute(values: MutableList<Long>): Long {
         TODO("Not yet implemented")
     }
 }

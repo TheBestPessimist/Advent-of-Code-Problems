@@ -9,19 +9,19 @@ object JumpIfFalseInstruction : Instruction {
 
     override val numberOfParameters = 2
 
-    override fun execute(values: List<Int>): Int {
+    override fun execute(values: MutableList<Long>): Long {
         TODO("Not yet implemented")
     }
 
     fun doIt(cpu: CPU, parameterModes: List<InstructionParameterMode>) {
-        val param: Int = cpu.loadParameter(0, parameterModes[0])
+        val param = cpu.loadParameter(0, parameterModes[0])
         if (isFalse(param)) {
-            val newProgramCounter: Int = cpu.loadParameter(1, parameterModes[1])
+            val newProgramCounter = cpu.loadParameter(1, parameterModes[1]).toInt()
             cpu.programCounter = newProgramCounter
         } else {
             cpu.programCounter += size
         }
     }
 
-    private fun isFalse(param: Int) = param == 0
+    private fun isFalse(param: Long) = param == 0L
 }

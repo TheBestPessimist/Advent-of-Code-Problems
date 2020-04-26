@@ -5,8 +5,8 @@ import land.tbp.y2019.intcode.computer.instructions.*
 class CPU(
         private val instructions: List<Instruction>,
         private val memory: Memory,
-        private val inputs: MutableList<Int>,
-        private val outputs: MutableList<Int>
+        private val inputs: MutableList<Long>,
+        private val outputs: MutableList<Long>
 ) {
 
     internal var programCounter = 0
@@ -18,7 +18,7 @@ class CPU(
     fun runProgram() {
         executionState = ExecutionState.Running
         while (executionState == ExecutionState.Running) {
-            val opcode = memory.read(programCounter)
+            val opcode = memory.read(programCounter).toInt()
             val instruction: Instruction = fetchAndDecode(opcode)
 
             if (HaltInstruction == instruction) {
@@ -40,7 +40,7 @@ class CPU(
     }
 
     private fun execute(instruction: Instruction) {
-        val instructionCode = memory.read(programCounter)
+        val instructionCode = memory.read(programCounter).toInt()
         val parameterModes = instruction.computeParameterModes(instructionCode)
 
         // This if will come later to bite my ass.
@@ -79,7 +79,7 @@ class CPU(
                 return
             }
             val outputValue = inputs.removeAt(0)
-            val writeToAddress = memory.read(position)
+            val writeToAddress = memory.read(position).toInt()
             memory.write(writeToAddress, outputValue)
         } else if (instruction == OutputInstruction) {
             val outputValue = readFromMemory(position, parameterModes[0])
@@ -91,13 +91,13 @@ class CPU(
     private fun handleNonIOInstructions(instruction: Instruction, parameterModes: List<InstructionParameterMode>) {
         val inputValues = loadInputsFromMemory(instruction, parameterModes)
 
-        val outputValue: Int = instruction.execute(inputValues)
-        val writeToAddress = memory.read(programCounter + instruction.numberOfParameters)
+        val outputValue = instruction.execute(inputValues)
+        val writeToAddress = memory.read(programCounter + instruction.numberOfParameters).toInt()
         memory.write(writeToAddress, outputValue)
     }
 
-    private fun loadInputsFromMemory(instruction: Instruction, parameterModes: List<InstructionParameterMode>): MutableList<Int> {
-        val inputValues = mutableListOf<Int>()
+    private fun loadInputsFromMemory(instruction: Instruction, parameterModes: List<InstructionParameterMode>): MutableList<Long> {
+        val inputValues = mutableListOf<Long>()
         for (parameterNumber in 0 until instruction.numberOfParameters - 1) {
             val inputValue = loadParameter(parameterNumber, parameterModes[parameterNumber])
             inputValues.add(inputValue)
@@ -105,14 +105,14 @@ class CPU(
         return inputValues
     }
 
-    internal fun loadParameter(parameterNumber: Int, parameterMode: InstructionParameterMode): Int {
+    internal fun loadParameter(parameterNumber: Int, parameterMode: InstructionParameterMode): Long {
         return readFromMemory(programCounter + 1 + parameterNumber, parameterMode)
     }
 
-    private fun readFromMemory(positionOrValue: Int, parameterMode: InstructionParameterMode): Int {
+    private fun readFromMemory(positionOrValue: Int, parameterMode: InstructionParameterMode): Long {
         return when (parameterMode) {
             InstructionParameterMode.Position -> {
-                val readFromAddress = memory.read(positionOrValue)
+                val readFromAddress = memory.read(positionOrValue).toInt()
                 memory.read(readFromAddress)
             }
             InstructionParameterMode.Immediate -> memory.read(positionOrValue)

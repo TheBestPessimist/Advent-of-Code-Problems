@@ -7,7 +7,7 @@ object OutputInstruction : Instruction {
 
     override val numberOfParameters = 1
 
-    override fun execute(values: List<Int>): Int {
+    override fun execute(values: MutableList<Long>): Long {
         return values[0]
     }
 }

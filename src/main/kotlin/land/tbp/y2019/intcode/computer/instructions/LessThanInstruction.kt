@@ -7,7 +7,7 @@ object LessThanInstruction : Instruction {
 
     override val numberOfParameters = 3
 
-    override fun execute(values: List<Int>): Int {
+    override fun execute(values: MutableList<Long>): Long {
         return if (values[0] < values[1]) 1 else 0
     }
 }
