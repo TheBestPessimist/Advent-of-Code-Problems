@@ -1,9 +1,18 @@
 package land.tbp.y2019.intcode.computer
 
-class Memory(ints: List<Int>) {
-    private val ints = ints.toMutableList()
+private val defaultMemory = MutableList<Long>(1_000_000) { 0 }
 
-    fun write(position: Int, value: Int) {
+class Memory(longs: List<Number>, largeMemory: Boolean = false) {
+
+    private val ints: MutableList<Long> = mutableListOf<Long>()
+            .apply {
+                addAll(longs.map { it.toLong() })
+                if (largeMemory) {
+                    addAll(defaultMemory)
+                }
+            }
+
+    fun write(position: Int, value: Long) {
         ints[position] = value
     }
 
