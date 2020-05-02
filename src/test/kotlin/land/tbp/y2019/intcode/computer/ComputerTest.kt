@@ -1,5 +1,6 @@
 package land.tbp.y2019.intcode.computer
 
+import land.tbp.y2019.day_9_sensor_boost.solve1
 import loadResourceFile
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Nested
@@ -221,8 +222,14 @@ internal class ComputerTest {
             val inputs = listOf<Int>()
             val outputs = listOf(109, 1, 204, -1, 1001, 100, 1, 100, 1008, 100, 16, 101, 1006, 101, 0, 99)
 
-            executeAndAssertOutput(ints, inputs, outputs, true)
+            executeAndAssertOutput(ints, inputs, outputs)
         }
+
+        @Test
+        fun problem1() {
+            assertEquals(listOf(3340912345), solve1())
+        }
+
     }
 
     @Nested
@@ -308,8 +315,7 @@ internal class ComputerTest {
     private fun executeAndAssertOutput(
             initialMemoryContent: List<Number>,
             initialInputs: List<Number>,
-            expectedOutputs: List<Number>,
-            largeMemory: Boolean = false
+            expectedOutputs: List<Number>
     ) {
 
         val actualOutputs = mutableListOf<Long>()
