@@ -73,13 +73,12 @@ class CPU(
     private fun handleIOInstructions(instruction: Instruction, parameterModes: List<InstructionParameterMode>) {
         val position = programCounter + instruction.numberOfParameters
         if (instruction == InputInstruction) {
-            // todo this might need parameterModes handling when writing. not sure.
             if (inputs.isEmpty()) {
                 executionState = ExecutionState.WaitingForInput
                 return
             }
             val outputValue = inputs.removeAt(0)
-            val writeToAddress = memory.read(position).toInt()
+            val writeToAddress =  calculateMemoryPosition(position, parameterModes[0])
             memory.write(writeToAddress, outputValue)
         } else if (instruction == OutputInstruction) {
             val outputValue = readFromMemory(position, parameterModes[0])
@@ -110,16 +109,21 @@ class CPU(
     }
 
     private fun readFromMemory(positionOrValue: Int, parameterMode: InstructionParameterMode): Long {
+        val position = calculateMemoryPosition(positionOrValue, parameterMode)
+        return memory.read(position)
+    }
+
+    private fun calculateMemoryPosition(positionOrValue: Int, parameterMode: InstructionParameterMode): Int {
         return when (parameterMode) {
             InstructionParameterMode.Position -> {
                 val readFromAddress = memory.read(positionOrValue).toInt()
-                memory.read(readFromAddress)
+                readFromAddress
             }
-            InstructionParameterMode.Immediate -> memory.read(positionOrValue)
+            InstructionParameterMode.Immediate -> positionOrValue
             InstructionParameterMode.Relative -> {
                 val value = memory.read(positionOrValue).toInt()
                 val readFromAddress = relativeBase + value
-                memory.read(readFromAddress)
+                readFromAddress
             }
         }
     }
