@@ -1,6 +1,7 @@
 package land.tbp.y2019.intcode.computer
 
 import land.tbp.y2019.day_9_sensor_boost.solve1
+import land.tbp.y2019.day_9_sensor_boost.solve2
 import loadResourceFile
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Nested
@@ -230,6 +231,10 @@ internal class ComputerTest {
             assertEquals(listOf(3340912345), solve1())
         }
 
+        @Test
+        fun problem2() {
+            assertEquals(listOf(51754L), solve2())
+        }
     }
 
     @Nested
