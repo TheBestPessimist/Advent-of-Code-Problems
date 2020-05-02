@@ -314,7 +314,7 @@ internal class ComputerTest {
 
         val actualOutputs = mutableListOf<Long>()
         Computer(
-                Memory(initialMemoryContent, largeMemory),
+                Memory(initialMemoryContent),
                 initialInputs.map { it.toLong() }.toMutableList(),
                 actualOutputs
         ).runProgram()
