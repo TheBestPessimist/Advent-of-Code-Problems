@@ -91,7 +91,7 @@ class CPU(
         val inputValues = loadInputsFromMemory(instruction, parameterModes)
 
         val outputValue = instruction.execute(inputValues)
-        val writeToAddress = memory.read(programCounter + instruction.numberOfParameters)
+        val writeToAddress = calculateMemoryPosition(programCounter + instruction.numberOfParameters,parameterModes.last())
         memory.write(writeToAddress, outputValue)
     }
 
