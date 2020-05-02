@@ -16,7 +16,7 @@ object JumpIfTrueInstruction : Instruction {
     fun doIt(cpu: CPU, parameterModes: List<InstructionParameterMode>) {
         val param = cpu.loadParameter(0, parameterModes[0])
         if (isTrue(param)) {
-            val newProgramCounter = cpu.loadParameter(1, parameterModes[1]).toInt()
+            val newProgramCounter = cpu.loadParameter(1, parameterModes[1])
             cpu.programCounter = newProgramCounter
         } else {
             cpu.programCounter += size

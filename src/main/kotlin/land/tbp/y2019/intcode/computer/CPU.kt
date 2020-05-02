@@ -9,7 +9,7 @@ class CPU(
         private val outputs: MutableList<Long>
 ) {
 
-    internal var programCounter = 0
+    internal var programCounter = 0L
 
     internal var executionState: ExecutionState = ExecutionState.Running
 
@@ -78,7 +78,7 @@ class CPU(
                 return
             }
             val outputValue = inputs.removeAt(0)
-            val writeToAddress =  calculateMemoryPosition(position, parameterModes[0])
+            val writeToAddress = calculateMemoryPosition(position, parameterModes[0])
             memory.write(writeToAddress, outputValue)
         } else if (instruction == OutputInstruction) {
             val outputValue = readFromMemory(position, parameterModes[0])
@@ -91,7 +91,7 @@ class CPU(
         val inputValues = loadInputsFromMemory(instruction, parameterModes)
 
         val outputValue = instruction.execute(inputValues)
-        val writeToAddress = memory.read(programCounter + instruction.numberOfParameters).toInt()
+        val writeToAddress = memory.read(programCounter + instruction.numberOfParameters)
         memory.write(writeToAddress, outputValue)
     }
 
@@ -108,20 +108,20 @@ class CPU(
         return readFromMemory(programCounter + 1 + parameterNumber, parameterMode)
     }
 
-    private fun readFromMemory(positionOrValue: Int, parameterMode: InstructionParameterMode): Long {
+    private fun readFromMemory(positionOrValue: Long, parameterMode: InstructionParameterMode): Long {
         val position = calculateMemoryPosition(positionOrValue, parameterMode)
         return memory.read(position)
     }
 
-    private fun calculateMemoryPosition(positionOrValue: Int, parameterMode: InstructionParameterMode): Int {
+    private fun calculateMemoryPosition(positionOrValue: Long, parameterMode: InstructionParameterMode): Long {
         return when (parameterMode) {
             InstructionParameterMode.Position -> {
-                val readFromAddress = memory.read(positionOrValue).toInt()
+                val readFromAddress = memory.read(positionOrValue)
                 readFromAddress
             }
             InstructionParameterMode.Immediate -> positionOrValue
             InstructionParameterMode.Relative -> {
-                val value = memory.read(positionOrValue).toInt()
+                val value = memory.read(positionOrValue)
                 val readFromAddress = relativeBase + value
                 readFromAddress
             }

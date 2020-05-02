@@ -2,20 +2,20 @@ package land.tbp.y2019.intcode.computer
 
 class Memory(longs: List<Number>) {
 
-    private val ints by lazy {
-        mutableMapOf<Int, Long>()
+    private val ints: MutableMap<Long, Long> by lazy {
+        mutableMapOf<Long, Long>()
                 .apply {
                     longs.forEachIndexed { i, n ->
-                        this[i] = n.toLong()
+                        this[i.toLong()] = n.toLong()
                     }
                 }
     }
 
-    fun write(position: Int, value: Long) {
+    fun write(position: Long, value: Long) {
         ints[position] = value
     }
 
-    fun read(position: Int): Long {
+    fun read(position: Long): Long {
         return ints[position] ?: 0
     }
 
