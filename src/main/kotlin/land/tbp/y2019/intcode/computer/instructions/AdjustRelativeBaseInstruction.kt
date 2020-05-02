@@ -15,7 +15,7 @@ object AdjustRelativeBaseInstruction : Instruction {
 
     fun doIt(cpu: CPU, parameterModes: List<InstructionParameterMode>) {
         val param: Int = cpu.loadParameter(0, parameterModes[0]).toInt()
-        cpu.relativeBase = param
+        cpu.relativeBase += param
         cpu.programCounter += size
     }
 }

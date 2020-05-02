@@ -117,7 +117,8 @@ class CPU(
             }
             InstructionParameterMode.Immediate -> memory.read(positionOrValue)
             InstructionParameterMode.Relative -> {
-                val readFromAddress = relativeBase + positionOrValue
+                val value = memory.read(positionOrValue).toInt()
+                val readFromAddress = relativeBase + value
                 memory.read(readFromAddress)
             }
         }

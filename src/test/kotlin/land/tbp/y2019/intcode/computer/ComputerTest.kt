@@ -198,12 +198,30 @@ internal class ComputerTest {
     @Nested
     internal inner class Day9 {
         @Test
-        fun `large numbers are supported`() {
+        fun `large numbers are supported 1`() {
             val ints = listOf(1102, 34915192, 34915192, 7, 4, 7, 99, 0)
             val inputs = listOf<Int>()
             val outputs = listOf(1219070632396864)
 
             executeAndAssertOutput(ints, inputs, outputs)
+        }
+
+        @Test
+        fun `large numbers are supported 2`() {
+            val ints = listOf<Long>(104, 1125899906842624, 99)
+            val inputs = listOf<Int>()
+            val outputs = listOf(1125899906842624)
+
+            executeAndAssertOutput(ints, inputs, outputs)
+        }
+
+        @Test
+        fun `test relative instruction parameter mode`() {
+            val ints = listOf<Long>(109, 1, 204, -1, 1001, 100, 1, 100, 1008, 100, 16, 101, 1006, 101, 0, 99)
+            val inputs = listOf<Int>()
+            val outputs = listOf(109, 1, 204, -1, 1001, 100, 1, 100, 1008, 100, 16, 101, 1006, 101, 0, 99)
+
+            executeAndAssertOutput(ints, inputs, outputs, true)
         }
     }
 
@@ -288,14 +306,15 @@ internal class ComputerTest {
     }
 
     private fun executeAndAssertOutput(
-            initialMemoryContent: List<Int>,
-            initialInputs: List<Int>,
-            expectedOutputs: List<Number>
+            initialMemoryContent: List<Number>,
+            initialInputs: List<Number>,
+            expectedOutputs: List<Number>,
+            largeMemory: Boolean = false
     ) {
 
         val actualOutputs = mutableListOf<Long>()
         Computer(
-                Memory(initialMemoryContent),
+                Memory(initialMemoryContent, largeMemory),
                 initialInputs.map { it.toLong() }.toMutableList(),
                 actualOutputs
         ).runProgram()
