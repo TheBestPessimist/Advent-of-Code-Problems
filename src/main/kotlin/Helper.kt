@@ -1,5 +1,12 @@
 import java.io.File
 
+/**
+ * Reads lines from the given input txt file.
+ */
+fun readInput(name: String): List<String> {
+    return File("src/main/resources/$name.txt").readLines()
+}
+
 fun loadResourceFile(path: String): String {
     val classloader = Thread.currentThread().contextClassLoader!!
     return File(classloader.getResource(path)!!.path).readText(Charsets.UTF_8)
@@ -7,9 +14,9 @@ fun loadResourceFile(path: String): String {
 
 fun stringToInt(s: String, regexpDelimiter: Regex = """(,|\s+)""".toRegex()): List<Int> {
     return s.split(regexpDelimiter)
-            .map { it.trim() }
-            .filter { it.isNotBlank() }
-            .map { it.toInt() }
+        .map { it.trim() }
+        .filter { it.isNotBlank() }
+        .map { it.toInt() }
 }
 
 
