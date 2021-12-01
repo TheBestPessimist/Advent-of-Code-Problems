@@ -3,7 +3,8 @@ package land.tbp.y2019.day_6_universal_orbit_map
 import land.tbp.y2019.tree.Node
 import land.tbp.y2019.tree.Tree
 import org.junit.jupiter.api.Test
-import kotlin.test.assertEquals
+import org.junit.jupiter.api.Assertions.assertEquals
+
 
 internal class Problem2KtTest {
 

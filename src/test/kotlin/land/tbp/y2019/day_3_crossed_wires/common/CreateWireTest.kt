@@ -1,7 +1,7 @@
 package land.tbp.y2019.day_3_crossed_wires.common
 
 import org.junit.jupiter.api.Test
-import kotlin.test.assertEquals
+import org.junit.jupiter.api.Assertions.assertEquals
 
 internal class CreateWireTest {
 

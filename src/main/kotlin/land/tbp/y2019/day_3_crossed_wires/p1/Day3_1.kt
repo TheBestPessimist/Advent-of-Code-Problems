@@ -23,7 +23,7 @@ fun solve(wire1PathStr: String, wire2PathStr: String): Int {
     val origin0x0 = Position(0, 0)
 
     intersection = intersection.minus(origin0x0)
-    val minPosition = intersection.minBy { manhattanDistance(origin0x0, it) }!!
+    val minPosition = intersection.minByOrNull { manhattanDistance(origin0x0, it) }!!
 
     return manhattanDistance(origin0x0, minPosition)
 }

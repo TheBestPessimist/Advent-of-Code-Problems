@@ -35,7 +35,7 @@ internal fun solve(s: String): Int {
         }
     }
 
-    return outputs.max()!!
+    return outputs.maxOrNull()!!
 }
 
 private fun phaseInputsValid(phaseInputs: List<Int>): Boolean {
@@ -61,7 +61,3 @@ private tailrec fun calculateOutput(ints: List<Int>, phaseInputs: List<Int>, com
 
     return calculateOutput(ints, phaseInputs.drop(1), outputs[0].toInt())
 }
-
-
-
-

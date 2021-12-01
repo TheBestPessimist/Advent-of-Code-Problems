@@ -37,7 +37,7 @@ internal fun solve2(s: String): Long {
         }
     }
 
-    return outputs.max()!!
+    return outputs.maxOrNull()!!
 }
 
 private fun phaseInputsValid(phaseInputs: List<Int>): Boolean {
@@ -97,7 +97,3 @@ private fun calculateOutput(ints: List<Long>, phaseInputs: List<Long>, computedI
 
     return outputs5
 }
-
-
-
-

@@ -18,7 +18,7 @@ fun algorithm1(s: String): Int {
             .map(Character::getNumericValue)
             .chunked(imageSize)
 
-    val fewestZeroDigitsLayer = layers.minBy {
+    val fewestZeroDigitsLayer = layers.minByOrNull {
         it.groupingBy { a -> a }
                 .eachCount()
                 .getOrDefault(0, 0)
