@@ -4,7 +4,9 @@ import java.io.File
  * Reads lines from the given input txt file.
  */
 fun readInput(name: String): List<String> {
-    return File("src/main/resources/$name.txt").readLines()
+    return File("src/main/resources/$name.txt")
+        .also { println(it) }
+        .readLines()
 }
 
 fun loadResourceFile(path: String): String {

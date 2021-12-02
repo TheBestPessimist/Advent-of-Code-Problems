@@ -4,10 +4,8 @@ import readInput
 
 
 fun main() {
-
     var input = readInput("land/tbp/year2021/Day01").map { it.toInt() }
     println(`day 1 - Sonar Sweep - Part 1`(input))
-
 
     input = readInput("land/tbp/year2021/Day01").map { it.toInt() }
     println(`day 1 - Sonar Sweep - Part 2`(input))
