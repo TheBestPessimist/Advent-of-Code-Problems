@@ -30,3 +30,15 @@ fun `day 1 - Sonar Sweep - Part 2`(input: List<Int>): Int {
 
     return `day 1 - Sonar Sweep - Part 1`(triples)
 }
+
+
+fun `day 1 - Sonar Sweep - Part 1 - alternative`(input: List<Int>): Int =
+    input
+        .windowed(2)
+        .count { (a, b) -> a < b }
+
+
+fun `day 1 - Sonar Sweep - Part 2 - alternative`(input: List<Int>): Int =
+    input
+        .windowed(4)
+        .count { (a, _, _, d) -> a < d }
