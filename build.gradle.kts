@@ -1,4 +1,5 @@
 val javaVersion = JavaVersion.VERSION_17
+val kotlinLanguageVersion = "1.6"
 
 java.sourceCompatibility = javaVersion
 java.targetCompatibility = javaVersion
@@ -26,8 +27,8 @@ tasks {
             @Suppress("SuspiciousCollectionReassignment")
             freeCompilerArgs += listOf("-Xjsr305=strict")
             jvmTarget = javaVersion.majorVersion
-            languageVersion = "1.6"
-            apiVersion = "1.6"
+            languageVersion = kotlinLanguageVersion
+            apiVersion = kotlinLanguageVersion
         }
     }
 
