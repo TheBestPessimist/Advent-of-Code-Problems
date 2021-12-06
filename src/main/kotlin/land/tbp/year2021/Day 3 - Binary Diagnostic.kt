@@ -70,7 +70,7 @@ fun `day 3 - Binary Diagnostic - Part 2`(input: List<String>): Int {
 
 fun findMostCommonBitsOnPositionPos(pos: Int, list: List<List<Int>>): List<List<Int>> {
     var sum = 0
-    var common = 0
+    var common: Int
     for (i in 0..list.lastIndex) {
         sum += if (list[i][pos] == 1) 1 else -1
     }
