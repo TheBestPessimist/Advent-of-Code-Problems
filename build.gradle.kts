@@ -1,4 +1,4 @@
-val javaVersion = JavaVersion.VERSION_17
+val javaVersion = JavaVersion.VERSION_16
 val kotlinLanguageVersion = "1.6"
 
 java.sourceCompatibility = javaVersion
@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
 }
 
 tasks {
