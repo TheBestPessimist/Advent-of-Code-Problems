@@ -54,7 +54,7 @@ fun `day 3 - Binary Diagnostic - Part 2`(input: List<String>): Int {
 //        println(list)
     }
 
-    val oxigen = list[0].joinToString("").toInt(2)
+    val oxygen = list[0].joinToString("").toInt(2)
 
 
     list = toList(input)
@@ -65,28 +65,26 @@ fun `day 3 - Binary Diagnostic - Part 2`(input: List<String>): Int {
     }
     val co2 = list[0].joinToString("").toInt(2)
 
-    return oxigen * co2
+    return oxygen * co2
 }
 
 fun findMostCommonBitsOnPositionPos(pos: Int, list: List<List<Int>>): List<List<Int>> {
     var sum = 0
-    var common: Int
     for (i in 0..list.lastIndex) {
         sum += if (list[i][pos] == 1) 1 else -1
     }
 
-    common = if (sum >= 0) 1 else 0
+    val common: Int = if (sum >= 0) 1 else 0
     return list.filter { it[pos] == common }
 }
 
 fun findLeastCommonBitsOnPositionPos(pos: Int, list: List<List<Int>>): List<List<Int>> {
     var sum = 0
-    var common = 0
     for (i in 0..list.lastIndex) {
         sum += if (list[i][pos] == 1) 1 else -1
     }
 
-    common = if (sum >= 0) 0 else 1
+    val common: Int = if (sum >= 0) 0 else 1
     return list.filter { it[pos] == common }
 }
 
