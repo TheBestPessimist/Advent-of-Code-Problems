@@ -2,6 +2,7 @@ package land.tbp.year2021
 
 import readInput
 
+internal class `2021 - Day 4 - Giant Squid`
 
 fun main() {
     val inputTest = readInput("land/tbp/year2021/Day04-t")

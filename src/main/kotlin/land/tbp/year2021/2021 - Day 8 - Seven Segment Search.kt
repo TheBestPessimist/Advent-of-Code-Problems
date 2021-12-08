@@ -2,7 +2,7 @@ package land.tbp.year2021
 
 import readInput
 
-internal class `Day 8 - Seven Segment Search`
+internal class `2021 - Day 8 - Seven Segment Search`
 
 fun main() {
     val inputTest = readInput("land/tbp/year2021/Day08-t")

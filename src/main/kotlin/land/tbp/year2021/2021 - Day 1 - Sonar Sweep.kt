@@ -2,6 +2,7 @@ package land.tbp.year2021
 
 import readInput
 
+internal class `2021 - Day 1 - Sonar Sweep`
 
 fun main() {
     var input = readInput("land/tbp/year2021/Day01").map { it.toInt() }

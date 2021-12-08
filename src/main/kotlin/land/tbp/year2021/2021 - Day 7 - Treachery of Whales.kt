@@ -3,6 +3,7 @@ package land.tbp.year2021
 import readInput
 import kotlin.math.abs
 
+internal class `2021 - Day 7 - Treachery of Whales`
 
 fun main() {
     val inputTest = readInput("land/tbp/year2021/Day07-t")

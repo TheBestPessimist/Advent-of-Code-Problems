@@ -3,6 +3,7 @@ package land.tbp.year2021
 import readInput
 import kotlin.math.abs
 
+internal class `2021 - Day 3 - Binary Diagnostic`
 
 fun main() {
     val inputTest = readInput("land/tbp/year2021/Day03-t")

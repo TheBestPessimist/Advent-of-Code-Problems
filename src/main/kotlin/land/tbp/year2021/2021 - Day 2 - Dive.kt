@@ -2,6 +2,8 @@ package land.tbp.year2021
 
 import readInput
 
+internal class `2021 - Day 2 - Dive`
+
 data class Vector(val direction: String, val length: Int)
 
 data class Submarine(
