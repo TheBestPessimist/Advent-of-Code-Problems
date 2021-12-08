@@ -1,8 +1,8 @@
 package land.tbp.year2021
 
 import readInput
+import measureTimeAndPrint
 import kotlin.time.ExperimentalTime
-import kotlin.time.measureTime
 
 internal class `2021 - Day 8 - Seven Segment Search`
 
@@ -11,11 +11,11 @@ fun main() {
     val inputTest = readInput("land/tbp/year2021/Day08-t")
     val input = readInput("land/tbp/year2021/Day08")
 
-    println(`day 8 - Seven Segment Search - Part 1`(inputTest))
-    println(`day 8 - Seven Segment Search - Part 1`(input))
+    measureTimeAndPrint {  println(`day 8 - Seven Segment Search - Part 1`(inputTest)) }
+    measureTimeAndPrint {   println(`day 8 - Seven Segment Search - Part 1`(input)) }
 
-    println(`day 8 - Seven Segment Search - Part 2`(inputTest))
-    measureTime { println(`day 8 - Seven Segment Search - Part 2`(input)) }.also { println(it) }
+    measureTimeAndPrint {   println(`day 8 - Seven Segment Search - Part 2`(inputTest)) }
+    measureTimeAndPrint { println(`day 8 - Seven Segment Search - Part 2`(input)) }
 }
 
 fun `day 8 - Seven Segment Search - Part 1`(input: List<String>): Int {

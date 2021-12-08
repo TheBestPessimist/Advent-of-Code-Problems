@@ -1,4 +1,6 @@
 import java.io.File
+import kotlin.time.ExperimentalTime
+import kotlin.time.measureTime
 
 /**
  * Reads lines from the given input txt file.
@@ -36,3 +38,6 @@ val Int.digits: List<Int>
 
         return digits.asReversed()
     }
+
+@OptIn(ExperimentalTime::class)
+fun measureTimeAndPrint(block: () -> Unit) = measureTime { block() }.also { println( "Duration: $it") }
