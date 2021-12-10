@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import readInput
 
-internal class `Day 8 - Seven Segment Search - Test` {
+internal class `2021 - Day 8 - Seven Segment Search - Test` {
     @Test
     fun test() {
         val inputTest = readInput("land/tbp/year2021/Day08-t")

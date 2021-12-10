@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import readInput
 
-internal class `Day 5 - Hydrothermal Venture - Test` {
+internal class `2021 - Day 5 - Hydrothermal Venture - Test` {
 
     @Test
     fun test() {

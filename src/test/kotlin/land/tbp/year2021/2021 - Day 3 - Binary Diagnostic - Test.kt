@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import readInput
 
-internal class `Day 3 - Binary Diagnostic - Test` {
+internal class `2021 - Day 3 - Binary Diagnostic - Test` {
 
     @Test
     fun test() {
