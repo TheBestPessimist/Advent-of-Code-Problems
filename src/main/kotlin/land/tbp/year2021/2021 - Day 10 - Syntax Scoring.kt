@@ -28,8 +28,7 @@ fun `2021 - Day 10 - Syntax Scoring - Part 1`(input: List<String>): Int {
             tmp = tmp.replace("{}", "")
         }
 
-
-        val tmp2 = tmp.split("").filter { it.isNotBlank() }
+        val tmp2 = tmp.chunked(1)
         if (tmp2.any { it in listOf("]", ">", "}", ")") }) {
             val first = tmp2.first { it in listOf("]", ">", "}", ")") }
             sum += pointsMap[first]!!
@@ -51,7 +50,7 @@ fun `2021 - Day 10 - Syntax Scoring - Part 2`(input: List<String>): Long {
             tmp = tmp.replace("{}", "")
         }
 
-        val tmp2 = tmp.split("").filter { it.isNotBlank() }
+        val tmp2 = tmp.chunked(1)
         if (tmp2.any { it in listOf("]", ">", "}", ")") }) {
             continue
         }
@@ -68,7 +67,7 @@ fun `2021 - Day 10 - Syntax Scoring - Part 2`(input: List<String>): Long {
 
     val sums = mutableListOf<Long>()
     for (c in completions) {
-        val tmp2 = c.split("").filter { it.isNotBlank() }
+        val tmp2 = c.chunked(1)
         var sum = 0L
         for (s in tmp2) {
             sum = sum * 5 + pointsMap[s]!!
