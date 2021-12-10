@@ -1,5 +1,6 @@
 package land.tbp.year2021
 
+import containsAny
 import readInput
 
 internal class `2021 - Day 10 - Syntax Scoring`
@@ -29,7 +30,7 @@ fun `2021 - Day 10 - Syntax Scoring - Part 1`(input: List<String>): Int {
         }
 
         val tmp2 = tmp.chunked(1)
-        if (tmp2.any { it in listOf("]", ">", "}", ")") }) {
+        if (tmp2.containsAny("]", ">", "}", ")")) {
             val first = tmp2.first { it in listOf("]", ">", "}", ")") }
             sum += pointsMap[first]!!
         }
@@ -51,7 +52,7 @@ fun `2021 - Day 10 - Syntax Scoring - Part 2`(input: List<String>): Long {
         }
 
         val tmp2 = tmp.chunked(1)
-        if (tmp2.any { it in listOf("]", ">", "}", ")") }) {
+        if (tmp2.containsAny("]", ">", "}", ")")) {
             continue
         }
 

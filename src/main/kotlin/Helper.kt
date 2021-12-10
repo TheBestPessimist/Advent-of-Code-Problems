@@ -40,4 +40,7 @@ val Int.digits: List<Int>
     }
 
 @OptIn(ExperimentalTime::class)
-fun measureTimeAndPrint(block: () -> Unit) = measureTime { block() }.also { println( "Duration: $it") }
+fun measureTimeAndPrint(block: () -> Unit) = measureTime { block() }.also { println("Duration: $it") }
+
+
+fun <T> Iterable<T>.containsAny(vararg elements: T): Boolean = this.any { it in elements }
