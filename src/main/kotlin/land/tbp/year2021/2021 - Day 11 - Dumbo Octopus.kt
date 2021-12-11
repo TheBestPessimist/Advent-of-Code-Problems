@@ -48,10 +48,8 @@ private fun step(input: List<String>, flashes: MutableList<MutableList<Int>>): I
         }
     }
 
-    var sum = 0
     while (queue.isNotEmpty()) {
-        sum++
-        val p = queue.removeAt(0)
+        val p = queue.removeFirst()
         flash(p.i, p.j, flashes, flashed, queue)
         flashed.forEach { (i, j) -> flashes[i][j] = 0 }
     }
@@ -88,7 +86,6 @@ private fun flash(i: Int, j: Int, flashes: MutableList<MutableList<Int>>, flashe
         flashed += P(i, j)
         did = true
     }
-
     if (did) {
         // update charge
         var x = i - 1..i + 1
@@ -108,20 +105,7 @@ private fun flash(i: Int, j: Int, flashes: MutableList<MutableList<Int>>, flashe
         }
     }
 
-//    for (flash in flashes) {
-//        println(flash.joinToString(""))
-//    }
-//    println()
-
-//
-//    val up = if (i == 0) Int.MAX_VALUE else flashes[i - 1][j]
-//    val down = if (i == flashes.lastIndex) Int.MAX_VALUE else flashes[i + 1][j]
-//    val left = if (j == 0) Int.MAX_VALUE else flashes[i][j - 1]
-//    val right = if (j == flashes[0].lastIndex) Int.MAX_VALUE else flashes[i][j + 1]
-
-
     return 0
-//    return x < listOf(up, down, left, right).minOrNull()!!
 }
 
 
