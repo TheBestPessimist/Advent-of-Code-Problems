@@ -2,6 +2,9 @@ import java.io.File
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
+typealias PII = Pair<Int, Int>
+
+
 /**
  * Reads lines from the given input txt file.
  */
@@ -44,3 +47,50 @@ fun measureTimeAndPrint(block: () -> Unit) = measureTime { block() }.also { prin
 
 
 fun <T> Iterable<T>.containsAny(vararg elements: T): Boolean = this.any { it in elements }
+
+
+fun Matrix(input: List<String>): Matrix<Int> = Matrix(
+    input.map { l ->
+        l.chunked(1).map { it.toInt() }.toMutableList()
+    }.toMutableList()
+)
+
+class Matrix<T> constructor(m: MutableList<MutableList<T>>) {
+    var lines: MutableList<MutableList<T>> = m
+
+    operator fun get(i: Int): MutableList<T> = lines[i]
+    operator fun get(i: Int, j: Int): T = lines[i][j]
+    operator fun set(i: Int, j: Int, value: T) {
+        lines[i][j] = value
+    }
+
+
+    val rangeI: IntProgression
+        get() = lines.indices
+    val rangeJ: IntProgression
+        get() = lines[0].indices
+
+    fun rangeJ(i: Int): IntProgression = lines[i].indices
+
+
+    inline fun iter(block: (i: Int, j: Int) -> Unit) {
+        for (i in rangeJ)
+            for (j in rangeJ(i))
+                block(i, j)
+    }
+
+    fun isValidPos(i: Int, j: Int): Boolean {
+        if (i < 0) return false
+        if (i > lines.lastIndex) return false
+        if (j < 0) return false
+        if (j > lines[i].lastIndex) return false
+        return true
+    }
+
+
+    fun isNotValidPos(i: Int, j: Int): Boolean = !isValidPos(i, j)
+
+    override fun toString(): String {
+        return lines.joinToString("\n") { it.toString() }
+    }
+}

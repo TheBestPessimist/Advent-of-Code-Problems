@@ -1,8 +1,11 @@
 package land.tbp.year2021
 
+import Matrix
+import PII
 import readInput
 
 internal class `2021 - Day 11 - Dumbo Octopus`
+
 
 fun main() {
     val inputTest = readInput("land/tbp/year2021/Day11-t")
@@ -20,87 +23,61 @@ fun main() {
 
 
 fun `2021 - Day 11 - Dumbo Octopus - Part 1`(input: List<String>): Int {
-    val flashes = mutableListOf<MutableList<Int>>()
-    for (i in 0..input.lastIndex) {
-        flashes += mutableListOf<Int>()
-        for (j in 0..input[0].lastIndex) {
-            val a = input[i][j].digitToInt()
-            flashes[i] += a
-        }
-    }
+    val flashes = Matrix(input)
+
     var sum = 0
     repeat(100) {
-        sum += step(input, flashes)
+        sum += step(flashes)
     }
 
     return sum
 }
 
-private data class P(val i: Int, val j: Int)
-
-private fun step(input: List<String>, flashes: MutableList<MutableList<Int>>): Int {
-    val flashed = mutableListOf<P>()
-    val queue = mutableListOf<P>()
-    for (i in 0..input.lastIndex) {
-        for (j in 0..input[0].lastIndex) {
-            flashes[i][j] += 1
-            if (flashes[i][j] > 9 && P(i, j) !in flashed) queue += P(i, j)
-        }
+private fun step(flashes: Matrix<Int>): Int {
+    val done = mutableListOf<PII>()
+    val queue = mutableListOf<PII>()
+    flashes.iter { i, j ->
+        flashes[i, j] += 1
+        if (flashes[i, j] > 9 && i to j !in done) queue += i to j
     }
 
     while (queue.isNotEmpty()) {
-        val p = queue.removeFirst()
-        flash(p.i, p.j, flashes, flashed, queue)
-        flashed.forEach { (i, j) -> flashes[i][j] = 0 }
+        val (i, j) = queue.removeFirst()
+        flash(i, j, flashes, done, queue)
+        done.forEach { (i, j) -> flashes[i, j] = 0 }
     }
 
-    return flashed.size
+    return done.size
 }
 
 fun `2021 - Day 11 - Dumbo Octopus - Part 2`(input: List<String>): Int {
-    val flashes = mutableListOf<MutableList<Int>>()
-    for (i in 0..input.lastIndex) {
-        flashes += mutableListOf<Int>()
-        for (j in 0..input[0].lastIndex) {
-            val a = input[i][j].digitToInt()
-            flashes[i] += a
-        }
-    }
+    val flashes = Matrix(input)
+
     var step = 0
     while (true) {
         step++
-        val sum = step(input, flashes)
+        val sum = step(flashes)
         if (sum == 100) break
-
     }
 
     return step
 }
 
-private fun flash(i: Int, j: Int, flashes: MutableList<MutableList<Int>>, flashed: MutableList<P>, queue: MutableList<P>): Int {
-    var f = flashes[i][j]
+private fun flash(i: Int, j: Int, flashes: Matrix<Int>, done: MutableList<PII>, queue: MutableList<PII>): Int {
+    if (flashes[i, j] > 9 && (i to j !in done)) {
+        flashes[i, j] = 0
+        done += i to j
 
-    var did = false
-    if (f > 9 && (P(i, j) !in flashed)) {
-        flashes[i][j] = 0
-        flashed += P(i, j)
-        did = true
-    }
-    if (did) {
         // update charge
-        var x = i - 1..i + 1
-        var y = j - 1..j + 1
+        val x = i - 1..i + 1
+        val y = j - 1..j + 1
         for (ii in x) {
             for (jj in y) {
                 if (ii == i && jj == j) continue
-                if (ii < 0) continue
-                if (ii > flashes.lastIndex) continue
-                if (jj < 0) continue
-                if (jj > flashes[0].lastIndex) continue
+                if (flashes.isNotValidPos(ii, jj)) continue
 
-                flashes[ii][jj] += 1
-
-                if (flashes[ii][jj] > 9 && P(ii, jj) !in flashed) queue += P(ii, jj)
+                flashes[ii, jj] += 1
+                if (flashes[ii, jj] > 9 && ii to jj !in done) queue += ii to jj
             }
         }
     }
