@@ -3,6 +3,7 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
 typealias PII = Pair<Int, Int>
+typealias PSS = Pair<String, String>
 
 
 /**
