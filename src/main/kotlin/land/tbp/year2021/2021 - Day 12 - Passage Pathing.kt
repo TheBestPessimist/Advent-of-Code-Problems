@@ -32,8 +32,6 @@ fun `2021 - Day 12 - Passage Pathing - Part 1`(input: List<String>): Int {
         val l = mutableListOf<PSS>()
         if ("start" == f || "end" == t) {
             l += f to t
-//        } else if () {
-//            l += f to t
         } else {
             l += f to t
             l += t to f
@@ -50,7 +48,7 @@ fun `2021 - Day 12 - Passage Pathing - Part 1`(input: List<String>): Int {
     return paths.size
 }
 
-fun visit(connections: List<PSS>, curr: String, path: List<String>, paths: MutableSet<List<String>>): Unit {
+fun visit(connections: List<PSS>, curr: String, path: List<String>, paths: MutableSet<List<String>>) {
     if (curr == "end") {
         paths += path
         return
@@ -66,28 +64,21 @@ fun visit(connections: List<PSS>, curr: String, path: List<String>, paths: Mutab
 }
 
 
-fun isSmall(s: String) = s.lowercase() == s
+private fun isSmall(s: String) = s.lowercase() == s
 
 fun `2021 - Day 12 - Passage Pathing - Part 2`(input: List<String>): Int {
     val connections = input.flatMap {
-        val s = it.split("-")
-        val f = s[0]
-        val t = s[1]
-        val l = mutableListOf<PSS>()
-        if ("start" == f || "end" == t) {
-            l += f to t
-//        } else if () {
-//            l += f to t
-        } else {
-            l += f to t
-            l += f to t
+        val (f, t) = it.split("-")
 
-            l += t to f
-            l += t to f
-        }
-        l
+        mutableListOf(
+            f to t,
+            t to f,
+
+//            // THIS edge duplication makes everything slow to a 15 minutes crawl.
+//             f to t,
+//             t to f,
+        )
     }
-//    println(connections)
 
     val paths = mutableSetOf<List<String>>()
     visit2(connections, "start", mutableListOf("start"), paths)
@@ -97,7 +88,7 @@ fun `2021 - Day 12 - Passage Pathing - Part 2`(input: List<String>): Int {
     return paths.size
 }
 
-fun visit2(connections: List<PSS>, curr: String, path: List<String>, paths: MutableSet<List<String>>, has2Small: Boolean = false): Unit {
+fun visit2(connections: List<PSS>, curr: String, path: List<String>, paths: MutableSet<List<String>>, has2Small: Boolean = false) {
     if (curr == "end") {
         paths += path
         return
@@ -109,10 +100,8 @@ fun visit2(connections: List<PSS>, curr: String, path: List<String>, paths: Muta
         if (p.count { it == "start" } > 1) continue
         if (p.count { it == "end" } > 1) continue
         if (isSmall(conn.second) && p.count { it == conn.second } > 2) continue
-//        if (isSmall(conn.second) &&
-//            p.filter { isSmall(it) }.groupingBy { it }.eachCount().count { it.component2() >= 2 } >= 2
-//        ) continue
 
+        // debug
 //        if(p == listOf("start", "dc", "kj", "dc", "HN", "kj"))
 //            println("a")
 
@@ -120,8 +109,8 @@ fun visit2(connections: List<PSS>, curr: String, path: List<String>, paths: Muta
             p.count { it == conn.second } >= 2
         ) continue
 
-        val c = connections - conn
-        val has2SmallNew = if(has2Small) has2Small else isSmall(conn.second) && p.count { it == conn.second } == 2
+        val c = connections //- conn + conn
+        val has2SmallNew = if (has2Small) has2Small else isSmall(conn.second) && p.count { it == conn.second } == 2
         visit2(c, conn.second, p, paths, has2SmallNew)
     }
 }
