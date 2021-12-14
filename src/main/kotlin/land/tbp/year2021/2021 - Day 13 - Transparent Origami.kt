@@ -68,9 +68,9 @@ fun `2021 - Day 13 - Transparent Origami - Part 2`(input: List<String>): Int {
 private fun dbg(dotsIn: List<List<Int>>) {
     val maxX = dotsIn.maxOf { it[0] }
     val maxY = dotsIn.maxOf { it[1] }
-    for (x in 0..maxX) {
+    for (y in 0..maxY) {
         println()
-        for (y in 0..maxY)
+        for (x in 0..maxX)
             if (listOf(x, y) in dotsIn)
                 print("#")
             else
