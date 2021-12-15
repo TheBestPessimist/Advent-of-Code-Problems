@@ -5,7 +5,7 @@ java.sourceCompatibility = javaVersion
 java.targetCompatibility = javaVersion
 
 plugins {
-    kotlin("jvm") version "1.6.0"
+    kotlin("jvm") version "1.6.10"
 }
 
 repositories {
@@ -35,4 +35,27 @@ tasks {
     withType<Test> {
         useJUnitPlatform()
     }
+
+
+//
+//    withType(JavaExec) {
+//        jvmArgs = listOf(
+//            "-server",
+//            "-XX:+UseSerialGC",
+//            "-XX:+UseStringDeduplication",
+////        "-Xms40m",
+//            "-Xmx20G"
+//        )
+//    }
 }
+
+
+//application {
+//    applicationDefaultJvmArgs = listOf(
+//        "-server",
+//        "-XX:+UseSerialGC",
+//        "-XX:+UseStringDeduplication",
+////        "-Xms40m",
+//        "-Xmx20G"
+//    )
+//}
