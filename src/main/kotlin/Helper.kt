@@ -73,6 +73,16 @@ class Matrix<T> constructor(m: MutableList<MutableList<T>>) {
 
     fun rangeJ(i: Int): IntProgression = lines[i].indices
 
+    fun neighbours(i: Int, j: Int, excludeCurrent: Boolean = true): MutableList<PII> {
+        val n = mutableListOf<PII>()
+        for (ii in i - 1..i + 1) {
+            for (jj in j - 1..j + 1) {
+                if (excludeCurrent && ii==i && jj==j) continue
+                if (isValidPos(ii, jj)) n += ii to jj
+            }
+        }
+        return n
+    }
 
     inline fun iter(block: (i: Int, j: Int) -> Unit) {
         for (i in rangeJ)
