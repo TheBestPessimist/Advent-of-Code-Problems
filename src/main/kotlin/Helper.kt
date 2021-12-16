@@ -105,3 +105,15 @@ class Matrix<T> constructor(m: MutableList<MutableList<T>>) {
         return lines.joinToString("\n") { it.toString() }
     }
 }
+
+
+/**
+ * WARNING: this is created by me and unoptimised!!!!
+ *
+ * Remove the first [n] items from this list and return them.
+ */
+fun <E> MutableList<E>.removeFirst(n: Int): MutableList<E> {
+    val ret = this.take(n).toMutableList()
+    for (i in 0 until n) this.removeFirst()
+    return ret
+}
