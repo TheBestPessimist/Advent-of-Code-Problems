@@ -33,9 +33,9 @@ fun `2021 - Day 17 - Trick Shot - Part 1`(input: List<String>): Number {
     for (i in 0..1000) {
         for (j in 0..1000) {
             val currentY = mutableListOf(0)
-            val p = Probe(i, j)
+            val p = Probe17(i, j)
             while (true) {
-                step(p)
+                step17(p)
                 currentY += p.y
                 if (p.x in targetX && p.y in targetY) {
                     val newMaxY = currentY.maxOf { it }
@@ -67,9 +67,9 @@ fun `2021 - Day 17 - Trick Shot - Part 2`(input: List<String>): Number {
 
     for (i in -1000..1000) {
         for (j in -1000..1000) {
-            val p = Probe(i, j)
+            val p = Probe17(i, j)
             while (true) {
-                step(p)
+                step17(p)
                 if (p.x in targetX && p.y in targetY) {
                     vs += i to j
                 }
@@ -83,14 +83,14 @@ fun `2021 - Day 17 - Trick Shot - Part 2`(input: List<String>): Number {
     return vs.size
 }
 
-data class Probe(
+private data class Probe17(
     var vx: Int,
     var vy: Int,
     var x: Int = 0,
     var y: Int = 0,
 )
 
-fun step(p: Probe) {
+private fun step17(p: Probe17) {
     p.x += p.vx
     p.y += p.vy
 
