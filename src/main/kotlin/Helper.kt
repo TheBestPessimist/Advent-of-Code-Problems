@@ -5,6 +5,10 @@ import kotlin.time.measureTime
 typealias PII = Pair<Int, Int>
 typealias PSS = Pair<String, String>
 
+typealias TIII = Triple<Int, Int, Int>
+typealias Point = TIII
+
+typealias Triangle = Triple<Point, Point, Point>
 
 /**
  * Reads lines from the given input txt file.
