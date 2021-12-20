@@ -1,8 +1,10 @@
-@file:Suppress("JoinDeclarationAndAssignment")
+@file:Suppress("JoinDeclarationAndAssignment", "NestedLambdaShadowedImplicitParameter")
 
 package land.tbp.year2021
 
 import Matrix
+import land.tbp.year2021.`2021 - Day 20 - Trench Map`.Companion.enhance
+import land.tbp.year2021.`2021 - Day 20 - Trench Map`.Companion.toInfinityAndBeyond
 import readInput
 import removeFirst
 import java.io.FileOutputStream
@@ -10,110 +12,97 @@ import java.io.FileOutputStream
 internal class `2021 - Day 20 - Trench Map` {
     companion object {
 
-
-    }
-}
-
-private fun dbg20(img: Matrix<Int>) {
-    FileOutputStream("dbg.txt", true).bufferedWriter().use { out ->
-        for (i in img.rangeI) {
-            println()
-            out.newLine()
-            for (j in img.rangeJ)
-                if (img[i, j] == 1) {
-                    print("#")
-                    out.write("#")
-                } else {
-                    print(" ")
-                    out.write(" ")
+        private fun dbg20(img: Matrix<Int>) {
+            FileOutputStream("dbg.txt", true).bufferedWriter().use { out ->
+                for (i in img.rangeI) {
+                    println()
+                    out.newLine()
+                    for (j in img.rangeJ)
+                        if (img[i, j] == 1) {
+                            print("#")
+                            out.write("#")
+                        } else {
+                            print(" ")
+                            out.write(" ")
+                        }
                 }
-        }
-        println()
-        out.newLine()
-    }
-}
-
-private fun toInfinityAndBeyond(img: Matrix<Int>, repeats: Int) {
-    val initialSize = img.lines.size
-    repeat(repeats) { img.lines.add(0, MutableList(initialSize) { 0 }) }
-    repeat(repeats) { img.lines.add(MutableList(initialSize) { 0 }) }
-
-    for (i in img.rangeI) {
-        repeat(repeats) { img[i].add(0, 0) }
-        repeat(repeats) { img[i].add(0) }
-    }
-//    println(img)
-}
-
-
-fun enhance(img: Matrix<Int>, enhancingAlgorithm: List<Int>, iteration: Int): Matrix<Int> {
-    val newLines: MutableList<MutableList<Int>> = mutableListOf()
-
-    val limit = 5
-
-    for (i in -limit..img.rangeI.last + limit) {
-        val curr = mutableListOf<Int>()
-        for (j in -limit..img.rangeJ.last + limit) {
-            val neighbours = img.neighboursValuesWithDefaultValue(i, j, 0, false)
-            val code = neighbours.joinToString("").toInt(2)
-            val newPixel = enhancingAlgorithm[code]
-            curr += newPixel
-        }
-        newLines += curr
-    }
-
-
-    val newMatrix = Matrix(newLines)
-//    if (iteration % 2 == 1) {
-////        val colToDelete = (limit - 1) * iteration // 3 * 4
-////        deleteFromImg(newMatrix, colToDelete)
-//    }
-    findDarkness(newMatrix)
-    return newMatrix
-
-//    val newMatrix = Matrix(MutableList(img.lines.size + 2) { MutableList(img.lines.size + 2) { 0 } })
-//    return newMatrix
-}
-
-fun findDarkness(img: Matrix<Int>) {
-    val colSize = img.columns().size
-    var colToDelete = -1
-
-    val validLinesDelta = img.lines.size / 10
-
-    for (j in colSize / 2 downTo 1) {
-//    for (j in colSize downTo 1) {
-        var ok = true
-//        for (i in 10..20) {
-        for (i in validLinesDelta..img.lines.lastIndex - validLinesDelta) {
-            if (img[i, j] == 0 && img[i, j - 1] == 0) {
-                ok = true
-            } else {
-                ok = false
-                break
+                println()
+                out.newLine()
             }
         }
-        if (ok) {
-            colToDelete = j
-            break
+
+        fun toInfinityAndBeyond(img: Matrix<Int>, repeats: Int) {
+            val initialSize = img.lines.size
+            repeat(repeats) { img.lines.add(0, MutableList(initialSize) { 0 }) }
+            repeat(repeats) { img.lines.add(MutableList(initialSize) { 0 }) }
+
+            for (i in img.rangeI) {
+                repeat(repeats) { img[i].add(0, 0) }
+                repeat(repeats) { img[i].add(0) }
+            }
+        }
+
+        fun enhance(img: Matrix<Int>, enhancingAlgorithm: List<Int>): Matrix<Int> {
+            val newLines: MutableList<MutableList<Int>> = mutableListOf()
+
+            val limit = 5
+
+            for (i in -limit..img.rangeI.last + limit) {
+                val curr = mutableListOf<Int>()
+                for (j in -limit..img.rangeJ.last + limit) {
+                    val neighbours = img.neighboursValuesWithDefaultValue(i, j, 0, false)
+                    val code = neighbours.joinToString("").toInt(2)
+                    val newPixel = enhancingAlgorithm[code]
+                    curr += newPixel
+                }
+                newLines += curr
+            }
+
+            val newMatrix = Matrix(newLines)
+            findDarkness(newMatrix)
+            return newMatrix
+        }
+
+        private fun findDarkness(img: Matrix<Int>) {
+            val colSize = img.columns().size
+            var colToDelete = -1
+
+            val validLinesDelta = img.lines.size / 10
+
+            for (j in colSize / 2 downTo 1) {
+                var ok = true
+                for (i in validLinesDelta..img.lines.lastIndex - validLinesDelta) {
+                    if (img[i, j] == 0 && img[i, j - 1] == 0) {
+                        ok = true
+                    } else {
+                        ok = false
+                        break
+                    }
+                }
+                if (ok) {
+                    colToDelete = j
+                    break
+                }
+            }
+            // drop first column [colToDelete] times
+            if (colToDelete == -1) return
+
+            deleteFromImg(img, colToDelete)
+        }
+
+        private fun deleteFromImg(img: Matrix<Int>, colToDelete: Int) {
+//    dbg20(img)
+
+            img.lines.removeFirst(colToDelete)
+            img.removeFirstColumns(colToDelete)
+            for (i in 0 until colToDelete) img.lines.removeLast()
+            img.removeLastColumns(colToDelete)
+
+//    dbg20(img)
         }
     }
-    // drop first column [colToDelete] times
-    if (colToDelete == -1) return
-
-    deleteFromImg(img, colToDelete)
 }
 
-private fun deleteFromImg(img: Matrix<Int>, colToDelete: Int) {
-//    dbg20(img)
-
-    img.lines.removeFirst(colToDelete)
-    img.removeFirstColumns(colToDelete)
-    for (i in 0 until colToDelete) img.lines.removeLast()
-    img.removeLastColumns(colToDelete)
-
-//    dbg20(img)
-}
 
 fun `2021 - Day 20 - Trench Map - Part 2`(input: List<String>): Int {
     val enhancingAlgorithm = input.first().windowed(1).map { if (it == "#") 1 else 0 }
@@ -121,7 +110,7 @@ fun `2021 - Day 20 - Trench Map - Part 2`(input: List<String>): Int {
 
     val repeats = 50
     repeat(repeats) {
-        img = enhance(img, enhancingAlgorithm, it)
+        img = enhance(img, enhancingAlgorithm)
 //        dbg20(img)
     }
 
@@ -147,7 +136,7 @@ fun `2021 - Day 20 - Trench Map - Part 1`(input: List<String>): Int {
     val img = Matrix(input.subList(2, input.size).map { it.windowed(1) { if (it == "#") 1 else 0 }.toMutableList() }.toMutableList())
     toInfinityAndBeyond(img, 7)
 
-    var newMatrix = Matrix(MutableList(img.lines.size) { MutableList(img.lines.size) { 0 } })
+    val newMatrix = Matrix(MutableList(img.lines.size) { MutableList(img.lines.size) { 0 } })
 
     for (i in 1 until img.rangeI.last) {
         for (j in 1 until img.rangeJ.last) {
@@ -176,7 +165,6 @@ fun `2021 - Day 20 - Trench Map - Part 1`(input: List<String>): Int {
         .map { it.subList(3, it.size - 3) }.toMutableList())
 
 //    dbg20(newMatrix3)
-
 
     return newMatrix3.lines.flatten().count { it == 1 }
 }
