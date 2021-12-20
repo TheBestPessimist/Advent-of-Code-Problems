@@ -10,6 +10,14 @@ typealias Point = TIII
 
 typealias Triangle = Triple<Point, Point, Point>
 
+fun createInputFileIfNotExists(name: String) {
+    val f = File("src/main/resources/$name.txt")
+    if (!f.exists()) {
+        f.createNewFile()
+    }
+}
+
+
 /**
  * Reads lines from the given input txt file.
  */
