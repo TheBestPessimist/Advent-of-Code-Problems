@@ -63,15 +63,42 @@ fun Matrix(input: List<String>): Matrix<Int> = Matrix(
 class Matrix<T> constructor(m: MutableList<MutableList<T>>) {
     var lines: MutableList<MutableList<T>> = m
 
+    fun columns(): MutableList<MutableList<T>> {
+        val columns: MutableList<MutableList<T>> = mutableListOf()
+        for (i in lines.indices) {
+            val col = mutableListOf<T>()
+            for (j in lines[i].indices) {
+                if (isValidPos(j, i))
+                    col += lines[j][i]
+            }
+            columns += col
+        }
+
+        return columns
+    }
+
+    fun removeFirstColumns(n: Int = 1) {
+        lines.forEach { col -> col.removeFirst(n) }
+    }
+
+    fun removeLastColumns(n: Int = 1) {
+        lines.forEach { col ->
+            for (i in 0 until n) col.removeLast()
+        }
+    }
+
+
     operator fun get(i: Int): MutableList<T> = lines[i]
     operator fun get(i: Int, j: Int): T = lines[i][j]
+
+
     operator fun set(i: Int, j: Int, value: T) {
         lines[i][j] = value
     }
 
-
     val rangeI: IntProgression
         get() = lines.indices
+
     val rangeJ: IntProgression
         get() = lines[0].indices
 
@@ -81,8 +108,21 @@ class Matrix<T> constructor(m: MutableList<MutableList<T>>) {
         val n = mutableListOf<PII>()
         for (ii in i - 1..i + 1) {
             for (jj in j - 1..j + 1) {
-                if (excludeCurrent && ii==i && jj==j) continue
+                if (excludeCurrent && ii == i && jj == j) continue
                 if (isValidPos(ii, jj)) n += ii to jj
+            }
+        }
+        return n
+    }
+
+
+    fun neighboursValuesWithDefaultValue(i: Int, j: Int, defaultValue: T, excludeCurrent: Boolean = true): MutableList<T> {
+        val n = mutableListOf<T>()
+        for (ii in i - 1..i + 1) {
+            for (jj in j - 1..j + 1) {
+                if (excludeCurrent && ii == i && jj == j) continue
+                n += if (isValidPos(ii, jj)) lines[ii][jj] else defaultValue
+
             }
         }
         return n
@@ -94,6 +134,7 @@ class Matrix<T> constructor(m: MutableList<MutableList<T>>) {
                 block(i, j)
     }
 
+
     fun isValidPos(i: Int, j: Int): Boolean {
         if (i < 0) return false
         if (i > lines.lastIndex) return false
@@ -101,7 +142,6 @@ class Matrix<T> constructor(m: MutableList<MutableList<T>>) {
         if (j > lines[i].lastIndex) return false
         return true
     }
-
 
     fun isNotValidPos(i: Int, j: Int): Boolean = !isValidPos(i, j)
 
