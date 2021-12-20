@@ -4,7 +4,6 @@ import Point
 import Triangle
 import land.tbp.year2021.`2021 - Day 19 - aaaa`.Companion.areaTriangle3d
 import land.tbp.year2021.`2021 - Day 19 - aaaa`.Companion.distance3d
-import land.tbp.year2021.`2021 - Day 19 - aaaa`.Companion.findAdjustment
 import land.tbp.year2021.`2021 - Day 19 - aaaa`.Companion.rotations
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Disabled
@@ -105,7 +104,7 @@ internal class `2021 - Day 19 - Test` {
     fun findAdjustmentTest() {
         val realt: Triangle = Triangle(Point(404, -588, -901), Point(528, -643, 409), Point(390, -675, -793))
         val wrongt: Triangle = Triangle(Point(-336, 658, 858), Point(-460, 603, -452), Point(-322, 571, 750))
-        assertEquals(Point(68, -1246, -43), findAdjustment(realt, wrongt))
+//        assertEquals(Point(68, -1246, -43), findAdjustment(realt, wrongt))
 
         distance3d(Point(404, -588, -901), Point(-336, 658, 858)).also { println(it) }
         distance3d(Point(528, -643, 409), Point(-460, 603, -452)).also { println(it) }
