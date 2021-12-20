@@ -5,7 +5,6 @@ package land.tbp.year2021
 import Matrix
 import readInput
 import removeFirst
-import java.io.File
 import java.io.FileOutputStream
 
 internal class `2021 - Day 20 - Trench Map` {
@@ -55,7 +54,7 @@ fun enhance(img: Matrix<Int>, enhancingAlgorithm: List<Int>, iteration: Int): Ma
     for (i in -limit..img.rangeI.last + limit) {
         val curr = mutableListOf<Int>()
         for (j in -limit..img.rangeJ.last + limit) {
-            val neighbours = img.neighboursValuesWithDefault(i, j, 0, false)
+            val neighbours = img.neighboursValuesWithDefaultValue(i, j, 0, false)
             val code = neighbours.joinToString("").toInt(2)
             val newPixel = enhancingAlgorithm[code]
             curr += newPixel
