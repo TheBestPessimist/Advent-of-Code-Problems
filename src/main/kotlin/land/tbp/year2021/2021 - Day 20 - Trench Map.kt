@@ -106,14 +106,14 @@ fun findDarkness(img: Matrix<Int>) {
 }
 
 private fun deleteFromImg(img: Matrix<Int>, colToDelete: Int) {
-    dbg20(img)
+//    dbg20(img)
 
     img.lines.removeFirst(colToDelete)
     img.removeFirstColumns(colToDelete)
     for (i in 0 until colToDelete) img.lines.removeLast()
     img.removeLastColumns(colToDelete)
 
-    dbg20(img)
+//    dbg20(img)
 }
 
 fun `2021 - Day 20 - Trench Map - Part 2`(input: List<String>): Int {
@@ -123,7 +123,7 @@ fun `2021 - Day 20 - Trench Map - Part 2`(input: List<String>): Int {
     val repeats = 50
     repeat(repeats) {
         img = enhance(img, enhancingAlgorithm, it)
-        dbg20(img)
+//        dbg20(img)
     }
 
     val newMatrix3 = img
@@ -133,7 +133,7 @@ fun `2021 - Day 20 - Trench Map - Part 2`(input: List<String>): Int {
 fun main() {
     val inputTest = readInput("land/tbp/year2021/Day20-t")
     val input = readInput("land/tbp/year2021/Day20")
-    File("dbg.txt").delete()
+//    File("dbg.txt").delete()
 
     println(`2021 - Day 20 - Trench Map - Part 1`(inputTest))
     println(`2021 - Day 20 - Trench Map - Part 1`(input))
@@ -158,7 +158,7 @@ fun `2021 - Day 20 - Trench Map - Part 1`(input: List<String>): Int {
         }
     }
 
-    dbg20(newMatrix)
+//    dbg20(newMatrix)
 
 
     val newMatrix2 = Matrix(MutableList(newMatrix.lines.size) { MutableList(newMatrix.lines.size) { 0 } })
@@ -171,12 +171,12 @@ fun `2021 - Day 20 - Trench Map - Part 1`(input: List<String>): Int {
         }
     }
 
-    dbg20(newMatrix2)
+//    dbg20(newMatrix2)
 
     val newMatrix3 = Matrix(newMatrix2.lines.subList(3, newMatrix2.lines.size - 3)
         .map { it.subList(3, it.size - 3) }.toMutableList())
 
-    dbg20(newMatrix3)
+//    dbg20(newMatrix3)
 
 
     return newMatrix3.lines.flatten().count { it == 1 }
