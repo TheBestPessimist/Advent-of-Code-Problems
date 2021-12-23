@@ -29,7 +29,7 @@ fun `day 4 - Giant Squid - Part 1`(input: List<String>): Int {
 
         boardNumbers += inp.split(" ").filter { it.isNotBlank() }.map { it.toInt() }
     }
-    val matrices = boardNumbers.chunked(5) { it.map { N(it) } }.chunked(5).map { Matrix4(it) }
+    val matrices = boardNumbers.chunked(5) { it.map { N4(it) } }.chunked(5).map { Matrix4(it) }
     //
 
     for (number in numbers) {
@@ -54,13 +54,13 @@ fun markAllBoardsAndCheck(matrices: List<Matrix4>, number: Int): Int {
     return 0
 }
 
-data class N(
+data class N4(
     val n: Int,
     var marked: Boolean = false,
 )
 
 
-data class Matrix4(val list: List<List<N>>) {
+data class Matrix4(val list: List<List<N4>>) {
     fun mark(n: Int): Unit {
         for (i in 0..4) {
             for (j in 0..4) {
@@ -71,12 +71,12 @@ data class Matrix4(val list: List<List<N>>) {
         }
     }
 
-    fun line(which: Int): List<N> {
+    fun line(which: Int): List<N4> {
         return list[which]
     }
 
-    fun column(which: Int): List<N> {
-        val l = mutableListOf<N>()
+    fun column(which: Int): List<N4> {
+        val l = mutableListOf<N4>()
         for (i in 0..4)
             l += list[i][which]
         return l
@@ -116,7 +116,7 @@ fun `day 4 - Giant Squid - Part 2`(input: List<String>): Int {
 
         boardNumbers += inp.split(" ").filter { it.isNotBlank() }.map { it.toInt() }
     }
-    val matrices = boardNumbers.chunked(5) { it.map { N(it) } }.chunked(5).map { Matrix4(it) }.toMutableList()
+    val matrices = boardNumbers.chunked(5) { it.map { N4(it) } }.chunked(5).map { Matrix4(it) }.toMutableList()
     //
 
     var number = 0
