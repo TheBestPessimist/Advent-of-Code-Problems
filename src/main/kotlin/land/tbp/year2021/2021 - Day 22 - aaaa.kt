@@ -91,9 +91,9 @@ data class Cuboid(
     val zz: Coordinates,
 ) {
     fun toList(): List<Int> = buildList {
-        val f = if (fromInclusivity == Inclusive) from else from + 1
-        val t = if (toInclusivity == Inclusive) to else to - 1
-        for (i in f..t) add(i)
+//        val f = if (fromInclusivity == Inclusive) from else from + 1
+//        val t = if (toInclusivity == Inclusive) to else to - 1
+//        for (i in f..t) add(i)
     }
 }
 
